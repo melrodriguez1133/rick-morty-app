@@ -3,34 +3,39 @@ import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
-    path: 'tabs',
+    path: 'rickiMorty',
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'dashboard',
         loadComponent: () =>
-          import('../tab1/tab1.page').then((m) => m.Tab1Page),
+          import('../features/dashboard/dashboard.page').then((m) => m.DashboardPage),
       },
       {
-        path: 'tab2',
+        path: 'characters',
         loadComponent: () =>
-          import('../tab2/tab2.page').then((m) => m.Tab2Page),
+          import('../features/characters/characters.page').then((m) => m.CharactersPage),
       },
       {
-        path: 'tab3',
+        path: 'episodes',
         loadComponent: () =>
-          import('../tab3/tab3.page').then((m) => m.Tab3Page),
+          import('../features/episode/episode.page').then((m) => m.EpisodePage),
+      },
+      {
+        path: 'locations',
+        loadComponent: () =>
+          import('../features/locations/locations.page').then((m) => m.LocationsPage),
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/rickiMorty/dashboard',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/rickiMorty/dashboard',
     pathMatch: 'full',
   },
 ];
