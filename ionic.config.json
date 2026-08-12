@@ -1,0 +1,7 @@
+{
+  "name": "rick-morty-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
