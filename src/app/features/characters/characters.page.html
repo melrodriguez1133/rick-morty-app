@@ -1,13 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>characters</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">characters</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-card
+    [title]="'Rick Sanchez'"
+    [image]="'https://rickandmortyapi.com/api/character/avatar/1.jpeg'"
+    [subtitle]="'Alive'"
+    [description]="'A genius scientist who invented a portal to other dimensions.'"
+  >
+  </app-card>
+
+  <app-card
+    [title]="'Morty Smith'"
+    [image]="'https://rickandmortyapi.com/api/character/avatar/2.jpeg'"
+    [subtitle]="'Dead'"
+    [description]="'Ricks goodhearted but easily distressed grandson.'"
+    > 
+  </app-card>
+
+  <app-card
+    [title]="'Summer Smith'"
+    [image]="'https://rickandmortyapi.com/api/character/avatar/3.jpeg'"
+    [subtitle]="'unknown'"
+    [description]="'Mortys older sister, a more conventional teenager.'"  
+  ></app-card>
 </ion-content>
