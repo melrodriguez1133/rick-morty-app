@@ -1,26 +1,17 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <app-card
-    [title]="'Rick Sanchez'"
-    [image]="'https://rickandmortyapi.com/api/character/avatar/1.jpeg'"
-    [subtitle]="'Alive'"
-    [description]="'A genius scientist who invented a portal to other dimensions.'"
-  >
-  </app-card>
 
-  <app-card
-    [title]="'Morty Smith'"
-    [image]="'https://rickandmortyapi.com/api/character/avatar/2.jpeg'"
-    [subtitle]="'Dead'"
-    [description]="'Ricks goodhearted but easily distressed grandson.'"
-    > 
-  </app-card>
+  @for(character of characters ;track character.id){
+    <app-card 
+      [title]="character.name"
+      [image]="character.image"
+      [subtitle]="character.status"
+      [description]="character.species"
+    >
+    </app-card>
+    }
 
-  <app-card
-    [title]="'Summer Smith'"
-    [image]="'https://rickandmortyapi.com/api/character/avatar/3.jpeg'"
-    [subtitle]="'unknown'"
-    [description]="'Mortys older sister, a more conventional teenager.'"  
-  ></app-card>
+ 
+ 
 </ion-content>

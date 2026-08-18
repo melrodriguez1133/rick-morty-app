@@ -1,13 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>episode</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">episode</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  @for(episode of episodes ;track episode.id){
+    <app-card 
+      [title]="episode.name"
+       [subtitle]="episode.air_date"
+      [description]="episode.episode"
+    >
+    </app-card>
+    }
+
+ 
+ 
 </ion-content>

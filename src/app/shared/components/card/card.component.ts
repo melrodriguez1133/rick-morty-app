@@ -15,7 +15,7 @@ import { getCharacterStatusColor } from '../../utils/status-character.util';
 export class CardComponent  implements OnInit {
 
   @Input() title: string = '';
-  @Input() image: string = '';
+  @Input() image?: string = '';
   @Input() subtitle: string = ''
   @Input() description: string = '';
 
