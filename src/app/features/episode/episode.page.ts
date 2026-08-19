@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
  import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonTitle, 
+  IonToolbar,
+  IonGrid,
+  IonRow,
+  IonCol
+ } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/shared/components/header/header.component";
 import { CardComponent } from "src/app/shared/components/card/card.component";
   import { ApiResponse } from "src/app/core/models/api-response.model";
@@ -12,7 +20,18 @@ import { Episode } from "src/app/core/models/episode.model";
   templateUrl: './episode.page.html',
   styleUrls: ['./episode.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, FormsModule,CardComponent,HeaderComponent]
+ imports: [
+    IonContent, 
+    IonHeader, 
+    IonTitle, 
+    IonToolbar, 
+    FormsModule, 
+    HeaderComponent, 
+    CardComponent,
+    IonGrid,
+    IonRow,
+    IonCol
+  ]
 })
 export class EpisodePage implements OnInit {
   episodes: Episode[] = [];

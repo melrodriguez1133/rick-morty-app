@@ -1,8 +1,13 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
-
+<ion-title class="title">Personajes</ion-title>
+<ion-grid class="ion-padding">
+  <ion-row>
+   
   @for(character of characters ;track character.id){
+     <ion-col
+     size="6" sizeMd="4" sizeLg="3">
     <app-card 
       [title]="character.name"
       [image]="character.image"
@@ -10,8 +15,8 @@
       [description]="character.species"
     >
     </app-card>
+    </ion-col>
     }
-
- 
- 
+  </ion-row>
+ </ion-grid>
 </ion-content>

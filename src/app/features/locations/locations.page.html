@@ -1,16 +1,20 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
-
+<ion-grid>
+  <ion-row>
   @for(location of locations ;track location.id){
+    <ion-col
+     size="6" sizeMd="4" sizeLg="3">
     <app-card 
       [title]="location.name"
        [subtitle]="location.type"
       [description]="location.dimension"
     >
     </app-card>
+    </ion-col>
     }
-
- 
+  </ion-row>
+</ion-grid>
  
 </ion-content>

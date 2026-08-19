@@ -1,16 +1,23 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
+<ion-grid>
+  <ion-row>
+
 
   @for(episode of episodes ;track episode.id){
+    <ion-col
+     size="6" sizeMd="4" sizeLg="3">
     <app-card 
       [title]="episode.name"
        [subtitle]="episode.air_date"
       [description]="episode.episode"
     >
     </app-card>
+    </ion-col>
     }
 
  
- 
+   </ion-row>
+</ion-grid>
 </ion-content>
