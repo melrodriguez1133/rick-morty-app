@@ -1,8 +1,30 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+ {
+  path: '',
+  redirectTo: 'home',
+  pathMatch: 'full' 
+ },
   {
-    path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
+    path: 'home',
+    loadComponent: () => import('./feature/home/home.page').then( m => m.HomePage)
   },
+  {
+    path: 'episode',
+    loadComponent: () => import('./feature/episode/episode.page').then( m => m.EpisodePage)
+  },
+  {
+    path: 'location',
+    loadComponent: () => import('./feature/location/location.page').then( m => m.LocationPage)
+  },
+  {
+    path: 'character',
+    loadComponent: () => import('./feature/character/character.page').then( m => m.CharacterPage)
+  },
+  {
+    path: 'favorite',
+    loadComponent: () => import('./feature/favorite/favorite.page').then( m => m.FavoritePage)
+  },
+
 ];
