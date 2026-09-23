@@ -1,0 +1,36 @@
+<ion-card class="m-4 overflow-hidden rounded-2xl shadow-lg">
+
+  @if (image) {
+    <img
+      [src]="image"
+      alt="Card Image"
+      class="h-64 w-full object-cover"
+    />
+  }
+
+  <ion-card-header class="px-4 pt-4 pb-2">
+
+    <ion-card-title
+      class="text-xl font-bold tracking-tight"
+    >
+      {{ title | uppercase }}
+    </ion-card-title>
+
+    <ion-card-subtitle
+       class="mt-2 font-semibold"
+    >
+      {{ subtitle | statusText }}
+    </ion-card-subtitle>
+
+  </ion-card-header>
+
+  <ion-card-content class="px-4 pb-4">
+
+    <p class="text-sm leading-6 text-gray-600">
+      {{ description }}
+    </p>
+
+  </ion-card-content>
+
+</ion-card>
+
