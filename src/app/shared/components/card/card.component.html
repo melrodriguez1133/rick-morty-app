@@ -1,36 +1,101 @@
-<ion-card class="m-4 overflow-hidden rounded-2xl shadow-lg">
+<ion-card
+  class="m-0 overflow-hidden rounded-3xl
+         border border-white/10
+         bg-[#0B1020]
+         shadow-[0_10px_30px_rgba(0,0,0,0.40)]
+         transition-all duration-300
+         hover:-translate-y-1
+         hover:border-[#97CE4C]/40
+         hover:shadow-[0_12px_35px_rgba(151,206,76,0.15)]"
+>
+
+  <!-- ========================= -->
+  <!-- IMAGEN -->
+  <!-- ========================= -->
 
   @if (image) {
-    <img
-      [src]="image"
-      alt="Card Image"
-      class="h-64 w-full object-cover"
-    />
+
+    <div class="relative h-60 overflow-hidden">
+
+      <img
+        [src]="image"
+        [alt]="title"
+        class="h-full w-full object-cover
+               transition-transform duration-500
+               hover:scale-105"
+      />
+
+      <!-- Degradado -->
+      <div
+        class="absolute inset-x-0 bottom-0 h-28
+               bg-gradient-to-t
+               from-[#0B1020]
+               via-[#0B1020]/60
+               to-transparent"
+      ></div>
+
+    </div>
+
   }
 
-  <ion-card-header class="px-4 pt-4 pb-2">
+
+  <!-- ========================= -->
+  <!-- CONTENIDO -->
+  <!-- ========================= -->
+
+  <ion-card-header
+    class="px-5 pb-2 pt-4"
+  >
+
+    <!-- TÍTULO -->
 
     <ion-card-title
-      class="text-xl font-bold tracking-tight"
+      class="text-xl font-bold
+             tracking-tight
+             text-white"
     >
       {{ title | uppercase }}
     </ion-card-title>
 
-    <ion-card-subtitle
-       class="mt-2 font-semibold"
-    >
-      {{ subtitle | statusText }}
-    </ion-card-subtitle>
+
+    <!-- SUBTÍTULO -->
+
+    @if (subtitle) {
+
+      <ion-card-subtitle
+        class="mt-2
+               text-sm
+               font-semibold
+               text-[#97CE4C]"
+      >
+        {{ subtitle | statusText }}
+      </ion-card-subtitle>
+
+    }
 
   </ion-card-header>
 
-  <ion-card-content class="px-4 pb-4">
 
-    <p class="text-sm leading-6 text-gray-600">
-      {{ description }}
-    </p>
+  <!-- ========================= -->
+  <!-- DESCRIPCIÓN -->
+  <!-- ========================= -->
 
-  </ion-card-content>
+  @if (description) {
+
+    <ion-card-content
+      class="px-5 pb-5 pt-1"
+    >
+
+      <p
+        class="text-sm
+               leading-6
+               text-slate-400"
+      >
+        {{ description }}
+      </p>
+
+    </ion-card-content>
+
+  }
 
 </ion-card>
-

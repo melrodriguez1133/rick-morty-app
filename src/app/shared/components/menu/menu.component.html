@@ -1,3 +1,203 @@
-<p>
-  menu works!
-</p>
+<ion-menu
+  menuId="main-menu"
+  contentId="main-content"
+  type="overlay"
+    class="[--background:#0B1020]"
+>
+
+  <!-- HEADER DEL MENÚ -->
+  <ion-header class="ion-no-border">
+
+    <ion-toolbar
+      class="[--background:#0B1020]"
+    >
+
+      <div class="flex items-center gap-3 px-5 py-4">
+
+        <!-- Portal -->
+        <div
+          class="flex h-10 w-10 shrink-0 items-center justify-center
+                 rounded-full
+                 border-2 border-[#97CE4C]
+                 bg-[#97CE4C]/10
+                 shadow-[0_0_12px_#97CE4C]"
+        >
+          <div
+            class="h-4 w-4 rounded-full
+                   bg-[#97CE4C]
+                   shadow-[0_0_10px_#97CE4C]"
+          ></div>
+        </div>
+
+        <div>
+          <p class="text-lg font-bold text-white">
+            Rick & Morty
+          </p>
+
+          <p class="text-xs text-slate-400">
+            Explore the multiverse
+          </p>
+        </div>
+
+      </div>
+
+    </ion-toolbar>
+
+  </ion-header>
+
+
+  <!-- CONTENIDO -->
+  <ion-content
+    class="[--background:#0B1020]"
+  >
+
+    <div class="px-3 py-4">
+
+      <!-- HOME -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/home"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="home-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          Home
+        </ion-label>
+
+      </ion-item>
+
+
+      <!-- CHARACTERS -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/character"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="people-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          Characters
+        </ion-label>
+
+      </ion-item>
+
+
+      <!-- EPISODES -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/episode"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="play-circle-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          Episodes
+        </ion-label>
+
+      </ion-item>
+
+
+      <!-- LOCATIONS -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/location"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="planet-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          Locations
+        </ion-label>
+
+      </ion-item>
+
+
+      <!-- FAVORITES -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/favorite"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="heart-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          Favorites
+        </ion-label>
+
+      </ion-item>
+
+
+      <!-- PROFILE -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/profile"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="person-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          My Profile
+        </ion-label>
+
+      </ion-item>
+
+    </div>
+
+  </ion-content>
+
+</ion-menu>

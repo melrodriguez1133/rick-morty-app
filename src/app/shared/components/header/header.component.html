@@ -1,16 +1,50 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
 
-    <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon name="menu-outline"></ion-icon>
+  <ion-toolbar
+    class="[--background:#0B1020] [--color:#FFFFFF] !h-14"
+  >
+
+    <!-- BOTÓN MENÚ -->
+    <ion-buttons slot="start" class="!ml-2">
+      <ion-button
+        fill="clear"
+        (click)="openMenu()"
+        class="!m-0 !h-10 !w-10 [--color:#97CE4C]"
+      >
+        <ion-icon
+          slot="icon-only"
+          name="menu-outline"
+          class="text-2xl"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <ion-title>
-      {{ title }}
-    </ion-title>
+    <!-- TÍTULO -->
+    <div
+      class="ml-1 flex h-full items-center gap-2"
+    >
+
+      <span
+        class="h-3 w-3 shrink-0 rounded-full
+               bg-[#97CE4C]
+               shadow-[0_0_10px_#97CE4C]"
+      ></span>
+
+      <span
+        class="whitespace-nowrap text-base font-bold text-white"
+      >
+        {{ title }}
+      </span>
+
+    </div>
 
   </ion-toolbar>
-</ion-header>
 
+  <!-- LÍNEA VERDE -->
+  <div
+    class="h-[2px]
+           bg-[#97CE4C]
+           shadow-[0_0_8px_#97CE4C]"
+  ></div>
+
+</ion-header>

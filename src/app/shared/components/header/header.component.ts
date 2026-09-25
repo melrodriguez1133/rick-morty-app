@@ -1,5 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import {
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  MenuController
+} from '@ionic/angular';
+
 import { addIcons } from 'ionicons';
 import { menuOutline } from 'ionicons/icons';
 
@@ -10,23 +18,36 @@ import { menuOutline } from 'ionicons/icons';
   imports: [
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonButtons,
     IonButton,
-    IonIcon,
-    IonContent
-],
+    IonIcon
+  ]
 })
-export class HeaderComponent  implements OnInit {
+export class HeaderComponent {
 
   @Input() title: string = 'Rick & Morty App';
 
-  constructor() { 
+  constructor(
+    private menuController: MenuController
+  ) {
     addIcons({
-       menuOutline
+      menuOutline
     });
   }
 
-  ngOnInit() {}
+  async openMenu() {
+
+    console.log('🟢 Botón menú presionado');
+
+    const isOpen = await this.menuController.isOpen('main-menu');
+
+    console.log('📌 ¿Está abierto?', isOpen);
+
+    if (!isOpen) {
+      await this.menuController.open('main-menu');
+      console.log('🟢 Menú abierto');
+    }
+
+  }
 
 }
