@@ -1,186 +1,633 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef
+} from '@angular/core';
 
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonCol,
+  IonGrid,
   IonRow,
-  IonGrid
+  IonCol,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent
 } from '@ionic/angular';
+
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
+
+import { Router } from '@angular/router';
 
 import { CharacterService } from '../../core/services/character-service';
 import { CharacterModel } from '../../core/models/character.model';
-import { CharacterFilters } from '../../core/interface/character-filter.interface';
-import { ApiResponse } from '../../core/models/api-response.model';
 
 import { CardComponent } from '../../shared/components/card/card.component';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 
-import {
-  isAlive,
-  isDead,
-  hasLocation,
-  hasOrigin,
-  hasEpisodes,
-  countEpisodes,
-  isHuman,
-  isAlien
-} from '../../shared/utils/character.util';
 
 @Component({
   selector: 'app-character',
+
   templateUrl: './character.page.html',
-  styleUrls: ['./character.page.scss'],
+
+  standalone: true,
+
   imports: [
-    CommonModule,
-    FormsModule,
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
     CardComponent,
-    LoadingComponent,
-      IonCol,
-  IonRow,
-  IonGrid
+    LoadingComponent
   ]
 })
-export class CharacterPage {
+export class CharacterPage implements OnInit {
+
+
+  // ==========================================
+  // REFERENCIA AL INFINITE SCROLL
+  // ==========================================
+
+  @ViewChild(IonInfiniteScroll)
+  infiniteScroll!: IonInfiniteScroll;
+
+
+  // ==========================================
+  // PERSONAJES
+  // ==========================================
 
   characters: CharacterModel[] = [];
 
-  filters: CharacterFilters = {};
+
+  // ==========================================
+  // LOADING INICIAL
+  // ==========================================
 
   loading = false;
 
+
+  // ==========================================
+  // LOADING DE MÁS PERSONAJES
+  // ==========================================
+
+  loadingMore = false;
+
+
+  // ==========================================
+  // PÁGINA ACTUAL
+  // ==========================================
+
+  currentPage = 1;
+
+
+  // ==========================================
+  // TOTAL DE PÁGINAS
+  // ==========================================
+
+  totalPages = 0;
+
+
+  // ==========================================
+  // ¿HAY MÁS PÁGINAS?
+  // ==========================================
+
+  hasMore = true;
+
+
+  // ==========================================
+  // CONTROL DE ERROR 429
+  // ==========================================
+
+  rateLimitBlocked = false;
+
+
+  // ==========================================
+  // CONSTRUCTOR
+  // ==========================================
+
   constructor(
     private characterService: CharacterService,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
-  /**
-   * Ionic ejecuta esto cada vez que entramos
-   * nuevamente a la página.
-   */
-  ionViewWillEnter(): void {
-    console.log('🟢 Entrando a Characters');
+
+  // ==========================================
+  // INIT
+  // ==========================================
+
+  ngOnInit(): void {
 
     this.loadCharacters();
+
   }
 
-  /**
-   * Cargar personajes
-   */
+
+  // ==========================================
+  // CARGAR PRIMERA PÁGINA
+  // ==========================================
+
   loadCharacters(): void {
 
-    console.log('🔵 Cargando personajes...');
+    console.log('================================');
+    console.log('🔵 CARGANDO PERSONAJES');
+    console.log('================================');
+
 
     this.loading = true;
 
+    this.loadingMore = false;
+
+    this.currentPage = 1;
+
+    this.totalPages = 0;
+
+    this.hasMore = true;
+
+    this.rateLimitBlocked = false;
+
+    this.characters = [];
+
+
+    // Reactivar Infinite Scroll
+    if (this.infiniteScroll) {
+
+      this.infiniteScroll.disabled = false;
+
+    }
+
+
     this.characterService
-      .getFilteredCharacters(this.filters)
+      .getCharacters(1)
       .subscribe({
 
-        next: (response: ApiResponse<CharacterModel>) => {
+        // ====================================
+        // SUCCESS
+        // ====================================
 
-          console.log('📦 Respuesta API:', response);
+        next: (response) => {
+
+          console.log('================================');
+          console.log('✅ PRIMERA PÁGINA RECIBIDA');
+          console.log('================================');
+
+          console.log(response);
+
+
+          // ==================================
+          // GUARDAR PERSONAJES
+          // ==================================
 
           this.characters = response.results;
 
-          console.log(
-            '👥 Total personajes:',
-            this.characters.length
-          );
 
-          this.testCharacterUtils();
+          // ==================================
+          // GUARDAR TOTAL DE PÁGINAS
+          // ==================================
+
+          this.totalPages = response.info.pages;
+
+
+          // ==================================
+          // COMPROBAR SI HAY MÁS
+          // ==================================
+
+          this.hasMore =
+            this.currentPage < this.totalPages;
+
+
+          // ==================================
+          // FINALIZAR LOADING
+          // ==================================
 
           this.loading = false;
 
-          /*
-           * Forzamos a Angular a actualizar la vista.
-           * Esto evita el problema que puede aparecer
-           * con los lifecycle hooks de Ionic.
-           */
+
+          console.log(
+            '👥 Personajes:',
+            this.characters.length
+          );
+
+          console.log(
+            '📄 Página:',
+            this.currentPage
+          );
+
+          console.log(
+            '📄 Total páginas:',
+            this.totalPages
+          );
+
+          console.log(
+            '➡️ Hay más:',
+            this.hasMore
+          );
+
+          console.log(
+            '🔴 Loading:',
+            this.loading
+          );
+
+
+          // ==================================
+          // ACTUALIZAR VISTA
+          // ==================================
+
           this.cdr.detectChanges();
 
-          console.log('🟢 Vista actualizada');
         },
+
+
+        // ====================================
+        // ERROR
+        // ====================================
 
         error: (error) => {
 
           console.error(
-            '❌ Error cargando personajes:',
+            '❌ Error al cargar personajes:',
             error
           );
+
 
           this.characters = [];
 
           this.loading = false;
 
+          this.hasMore = false;
+
+
+          // ==================================
+          // ACTUALIZAR VISTA
+          // ==================================
+
           this.cdr.detectChanges();
+
         }
 
       });
+
   }
 
-  /**
-   * Pruebas de los utilitarios
-   */
-  private testCharacterUtils(): void {
 
-    this.characters.forEach((character) => {
+  // ==========================================
+  // INFINITE SCROLL
+  // ==========================================
 
-      console.log('-----------------------------------');
+  loadMore(
+    event: InfiniteScrollCustomEvent
+  ): void {
 
-      console.log(
-        '👤 Personaje:',
-        character.name
-      );
+    console.log('================================');
+    console.log('🔄 INFINITE SCROLL');
+    console.log('================================');
 
-      console.log(
-        '🟢 ¿Está vivo?:',
-        isAlive(character)
-      );
+    console.log(
+      '📄 Página actual:',
+      this.currentPage
+    );
 
-      console.log(
-        '🔴 ¿Está muerto?:',
-        isDead(character)
-      );
+    console.log(
+      '📄 Total páginas:',
+      this.totalPages
+    );
 
-      console.log(
-        '📍 ¿Tiene ubicación?:',
-        hasLocation(character)
-      );
+    console.log(
+      '➡️ Hay más:',
+      this.hasMore
+    );
 
-      console.log(
-        '🌎 ¿Tiene origen?:',
-        hasOrigin(character)
-      );
+    console.log(
+      '🔄 Loading more:',
+      this.loadingMore
+    );
 
-      console.log(
-        '🎬 ¿Tiene episodios?:',
-        hasEpisodes(character)
-      );
+    console.log(
+      '🚫 Rate limit:',
+      this.rateLimitBlocked
+    );
 
-      console.log(
-        '📺 Cantidad de episodios:',
-        countEpisodes(character)
-      );
 
-      console.log(
-        '👨 ¿Es humano?:',
-        isHuman(character)
-      );
+    // ========================================
+    // SI YA ESTÁ CARGANDO
+    // ========================================
+
+    if (this.loadingMore) {
 
       console.log(
-        '👽 ¿Es alien?:',
-        isAlien(character)
+        '⚠️ Ya existe una petición en curso'
       );
 
-    });
+      event.target.complete();
+
+      return;
+
+    }
+
+
+    // ========================================
+    // SI ESTAMOS BLOQUEADOS POR 429
+    // ========================================
+
+    if (this.rateLimitBlocked) {
+
+      console.log(
+        '⚠️ API temporalmente bloqueada'
+      );
+
+      event.target.complete();
+
+      return;
+
+    }
+
+
+    // ========================================
+    // SI NO HAY MÁS PÁGINAS
+    // ========================================
+
+    if (
+      !this.hasMore ||
+      this.currentPage >= this.totalPages
+    ) {
+
+      console.log(
+        '🏁 No existen más páginas'
+      );
+
+
+      this.hasMore = false;
+
+      event.target.complete();
+
+      event.target.disabled = true;
+
+      this.cdr.detectChanges();
+
+      return;
+
+    }
+
+
+    // ========================================
+    // ACTIVAR LOCK
+    // ========================================
+
+    this.loadingMore = true;
+
+
+    // ========================================
+    // SIGUIENTE PÁGINA
+    // ========================================
+
+    const nextPage =
+      this.currentPage + 1;
+
+
+    console.log(
+      '📡 Solicitando página:',
+      nextPage
+    );
+
+
+    // ========================================
+    // PETICIÓN
+    // ========================================
+
+    this.characterService
+      .getCharacters(nextPage)
+      .subscribe({
+
+        // ====================================
+        // SUCCESS
+        // ====================================
+
+        next: (response) => {
+
+          console.log('================================');
+          console.log('✅ RESPUESTA CORRECTA');
+          console.log('================================');
+
+          console.log(
+            '📄 Página:',
+            nextPage
+          );
+
+          console.log(
+            '👥 Personajes recibidos:',
+            response.results.length
+          );
+
+
+          // ==================================
+          // AGREGAR PERSONAJES
+          // ==================================
+
+          this.characters = [
+            ...this.characters,
+            ...response.results
+          ];
+
+
+          // ==================================
+          // ACTUALIZAR PÁGINA
+          // ==================================
+
+          this.currentPage =
+            nextPage;
+
+
+          // ==================================
+          // ACTUALIZAR TOTAL
+          // ==================================
+
+          this.totalPages =
+            response.info.pages;
+
+
+          // ==================================
+          // COMPROBAR SI HAY MÁS
+          // ==================================
+
+          this.hasMore =
+            this.currentPage < this.totalPages;
+
+
+          // ==================================
+          // QUITAR LOCK
+          // ==================================
+
+          this.loadingMore = false;
+
+
+          // ==================================
+          // FINALIZAR INFINITE SCROLL
+          // ==================================
+
+          event.target.complete();
+
+
+          // ==================================
+          // DESACTIVAR AL TERMINAR
+          // ==================================
+
+          if (!this.hasMore) {
+
+            console.log(
+              '🏁 ÚLTIMA PÁGINA'
+            );
+
+            event.target.disabled = true;
+
+          }
+
+
+          // ==================================
+          // ACTUALIZAR VISTA
+          // ==================================
+
+          this.cdr.detectChanges();
+
+
+          console.log(
+            '👥 Personajes totales:',
+            this.characters.length
+          );
+
+          console.log(
+            '📄 Página actual:',
+            this.currentPage
+          );
+
+          console.log(
+            '➡️ Hay más:',
+            this.hasMore
+          );
+
+        },
+
+
+        // ====================================
+        // ERROR
+        // ====================================
+
+        error: (error) => {
+
+          console.error(
+            '================================'
+          );
+
+          console.error(
+            '❌ ERROR AL CARGAR PÁGINA'
+          );
+
+          console.error(
+            '📄 Página:',
+            nextPage
+          );
+
+          console.error(error);
+
+
+          // ==================================
+          // QUITAR LOCK
+          // ==================================
+
+          this.loadingMore = false;
+
+
+          // ==================================
+          // FINALIZAR SPINNER
+          // ==================================
+
+          event.target.complete();
+
+
+          // ==================================
+          // ERROR 429
+          // ==================================
+
+          if (error.status === 429) {
+
+            console.warn(
+              '⚠️ API LIMITADA: 429 TOO MANY REQUESTS'
+            );
+
+
+            // ==================================
+            // ACTIVAR BLOQUEO TEMPORAL
+            // ==================================
+
+            this.rateLimitBlocked = true;
+
+
+            // ==================================
+            // DESACTIVAR TEMPORALMENTE
+            // ==================================
+
+            event.target.disabled = true;
+
+
+            // ==================================
+            // ESPERAR 5 SEGUNDOS
+            // ==================================
+
+            setTimeout(() => {
+
+              console.log(
+                '🔓 Reactivando Infinite Scroll'
+              );
+
+
+              this.rateLimitBlocked = false;
+
+
+              // =================================
+              // SOLO REACTIVAR SI HAY MÁS
+              // =================================
+
+              if (this.hasMore) {
+
+                event.target.disabled = false;
+
+              }
+
+
+              this.cdr.detectChanges();
+
+            }, 5000);
+
+          }
+
+
+          this.cdr.detectChanges();
+
+        }
+
+      });
+
   }
+
+
+  // ==========================================
+  // IR AL DETALLE
+  // ==========================================
+
+  goToCharacter(id: number): void {
+
+    console.log(
+      '➡️ Abriendo personaje:',
+      id
+    );
+
+
+    this.router.navigate([
+      '/character',
+      id
+    ]);
+
+  }
+
 }

@@ -42,6 +42,12 @@ export const routes: Routes = [
           import('./feature/character/character.page')
             .then(m => m.CharacterPage)
       },
+      {
+  path: 'character/:id',
+  loadComponent: () =>
+    import('./feature/character-detail/character-detail.page')
+      .then(m => m.CharacterDetailPage)
+},
 
       {
         path: 'favorite',
@@ -51,6 +57,7 @@ export const routes: Routes = [
       }
 
     ]
-  }
+  },
+ 
 
 ];

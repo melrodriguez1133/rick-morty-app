@@ -50,6 +50,7 @@
 
               </div>
 
+
               <h1
                 class="mt-2
                        text-3xl
@@ -60,6 +61,7 @@
                 Locations
               </h1>
 
+
               <p
                 class="mt-2
                        text-sm
@@ -69,6 +71,7 @@
                 Explora los lugares y dimensiones
                 del multiverso.
               </p>
+
 
               @if (locations.length > 0) {
 
@@ -90,7 +93,7 @@
                              font-bold
                              text-[#97CE4C]"
                     >
-                      {{ locations.length }}
+                      {{ totalLocations }}
                     </span>
 
                     <span
@@ -147,7 +150,256 @@
 
           </ion-row>
 
+
+<!-- ========================= -->
+<!-- PAGINACIÓN -->
+<!-- ========================= -->
+
+<ion-row class="mt-6">
+
+  <ion-col
+    size="12"
+    class="p-0"
+  >
+
+    <div class="flex w-full justify-center">
+
+      <div
+        class="flex max-w-full items-center
+               gap-0.5
+               rounded-2xl
+               border border-white/10
+               bg-[#0B1020]/95
+               p-1.5
+               shadow-[0_8px_25px_rgba(0,0,0,0.25)]"
+      >
+
+        <!-- ========================= -->
+        <!-- PRIMERA PÁGINA -->
+        <!-- ========================= -->
+
+        <ion-button
+          fill="clear"
+          size="small"
+          [disabled]="!canGoPrevious"
+          (click)="firstPage()"
+          class="m-0 min-w-8"
+        >
+
+          <span
+            class="text-base font-bold text-slate-300"
+          >
+            «
+          </span>
+
+        </ion-button>
+
+
+        <!-- ========================= -->
+        <!-- PÁGINA ANTERIOR -->
+        <!-- ========================= -->
+
+        <ion-button
+          fill="clear"
+          size="small"
+          [disabled]="!canGoPrevious"
+          (click)="previousPage()"
+          class="m-0 min-w-8"
+        >
+
+          <span
+            class="text-base font-bold text-slate-300"
+          >
+            ‹
+          </span>
+
+        </ion-button>
+
+
+        <!-- ================================================= -->
+        <!-- 📱 MÓVIL -->
+        <!-- ================================================= -->
+
+        <div
+          class="flex items-center gap-0.5 md:hidden"
+        >
+
+          @for (
+            page of mobilePages;
+            track $index
+          ) {
+
+            @if (page === '...') {
+
+              <!-- PUNTOS -->
+
+              <span
+                class="flex
+                       h-8
+                       min-w-6
+                       items-center
+                       justify-center
+                       px-1
+                       text-xs
+                       font-bold
+                       text-slate-500"
+              >
+                ...
+              </span>
+
+            } @else {
+
+              <!-- NÚMERO -->
+
+              <button
+                type="button"
+                (click)="goToPage(page)"
+                class="flex
+                       h-8
+                       min-w-8
+                       items-center
+                       justify-center
+                       rounded-lg
+                       px-1
+                       text-xs
+                       font-bold
+                       transition-all
+                       duration-200"
+                [class.bg-[#97CE4C]]="page === currentPage"
+                [class.text-[#0B1020]]="page === currentPage"
+                [class.text-slate-300]="page !== currentPage"
+              >
+
+                {{ page }}
+
+              </button>
+
+            }
+
+          }
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- 💻 DESKTOP -->
+        <!-- ================================================= -->
+
+        <div
+          class="hidden
+                 items-center
+                 gap-0.5
+                 md:flex"
+        >
+
+          @for (
+            page of visiblePages;
+            track $index
+          ) {
+
+            @if (page === '...') {
+
+              <!-- PUNTOS -->
+
+              <span
+                class="flex
+                       h-8
+                       min-w-7
+                       items-center
+                       justify-center
+                       px-1
+                       text-xs
+                       font-bold
+                       text-slate-500"
+              >
+                ...
+              </span>
+
+            } @else {
+
+              <!-- NÚMERO -->
+
+              <button
+                type="button"
+                (click)="goToPage(page)"
+                class="flex
+                       h-8
+                       min-w-8
+                       items-center
+                       justify-center
+                       rounded-lg
+                       px-2
+                       text-xs
+                       font-bold
+                       transition-all
+                       duration-200
+                       hover:bg-white/10"
+                [class.bg-[#97CE4C]]="page === currentPage"
+                [class.text-[#0B1020]]="page === currentPage"
+                [class.text-slate-300]="page !== currentPage"
+              >
+
+                {{ page }}
+
+              </button>
+
+            }
+
+          }
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PÁGINA SIGUIENTE -->
+        <!-- ========================= -->
+
+        <ion-button
+          fill="clear"
+          size="small"
+          [disabled]="!canGoNext"
+          (click)="nextPage()"
+          class="m-0 min-w-8"
+        >
+
+          <span
+            class="text-base font-bold text-slate-300"
+          >
+            ›
+          </span>
+
+        </ion-button>
+
+
+        <!-- ========================= -->
+        <!-- ÚLTIMA PÁGINA -->
+        <!-- ========================= -->
+
+        <ion-button
+          fill="clear"
+          size="small"
+          [disabled]="!canGoNext"
+          (click)="lastPage()"
+          class="m-0 min-w-8"
+        >
+
+          <span
+            class="text-base font-bold text-slate-300"
+          >
+            »
+          </span>
+
+        </ion-button>
+
+      </div>
+
+    </div>
+
+  </ion-col>
+
+</ion-row>
         }
+
 
         <!-- ========================= -->
         <!-- SIN RESULTADOS -->
@@ -163,7 +415,8 @@
             >
 
               <div
-                class="flex min-h-[45vh]
+                class="flex
+                       min-h-[45vh]
                        items-center
                        justify-center"
               >
@@ -191,10 +444,13 @@
                            border-[#97CE4C]/30
                            bg-[#97CE4C]/10"
                   >
+
                     <span class="text-2xl">
                       🌎
                     </span>
+
                   </div>
+
 
                   <h2
                     class="mt-4
@@ -204,6 +460,7 @@
                   >
                     No encontramos ubicaciones
                   </h2>
+
 
                   <p
                     class="mt-2

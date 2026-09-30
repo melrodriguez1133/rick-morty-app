@@ -4,15 +4,24 @@
 
     <app-loading></app-loading>
 
-  } @else {
+  }
 
-    <div class="px-4 pb-8 pt-16">
+  @else {
+
+    <div
+      class="
+        px-4
+        pb-8
+        pt-16
+      "
+    >
 
       <ion-grid class="p-0">
 
-        <!-- ========================= -->
+
+        <!-- ================================= -->
         <!-- HEADER -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
         <ion-row>
 
@@ -22,81 +31,118 @@
           >
 
             <div
-              class="rounded-2xl
-                     border border-white/10
-                     bg-[#0B1020]/95
-                     px-5 py-5
-                     shadow-[0_8px_25px_rgba(0,0,0,0.35)]"
+              class="
+                rounded-2xl
+                border border-white/10
+                bg-[#0B1020]/95
+                px-5 py-5
+                shadow-[0_8px_25px_rgba(0,0,0,0.35)]
+              "
             >
 
-              <div class="flex items-center gap-2">
+              <!-- LABEL -->
+
+              <div
+                class="
+                  flex
+                  items-center
+                  gap-2
+                "
+              >
 
                 <span
-                  class="h-2.5 w-2.5
-                         rounded-full
-                         bg-[#97CE4C]
-                         shadow-[0_0_10px_#97CE4C]"
+                  class="
+                    h-2.5
+                    w-2.5
+                    rounded-full
+                    bg-[#97CE4C]
+                    shadow-[0_0_10px_#97CE4C]
+                  "
                 ></span>
 
+
                 <span
-                  class="text-[11px]
-                         font-bold
-                         uppercase
-                         tracking-[0.2em]
-                         text-[#97CE4C]"
+                  class="
+                    text-[11px]
+                    font-bold
+                    uppercase
+                    tracking-[0.2em]
+                    text-[#97CE4C]
+                  "
                 >
                   Rick & Morty
                 </span>
 
               </div>
 
+
+              <!-- TITULO -->
+
               <h1
-                class="mt-2
-                       text-3xl
-                       font-black
-                       tracking-tight
-                       text-white"
+                class="
+                  mt-2
+                  text-3xl
+                  font-black
+                  tracking-tight
+                  text-white
+                "
               >
                 Episodes
               </h1>
 
+
+              <!-- DESCRIPCIÓN -->
+
               <p
-                class="mt-2
-                       text-sm
-                       leading-5
-                       text-slate-300"
+                class="
+                  mt-2
+                  text-sm
+                  leading-5
+                  text-slate-300
+                "
               >
                 Explora todos los episodios
                 de la serie.
               </p>
+
+
+              <!-- CONTADOR -->
 
               @if (episodes.length > 0) {
 
                 <div class="mt-4">
 
                   <span
-                    class="inline-flex
-                           items-center
-                           gap-2
-                           rounded-full
-                           border
-                           border-[#97CE4C]/30
-                           bg-[#97CE4C]/10
-                           px-3 py-1.5"
+                    class="
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-full
+                      border
+                      border-[#97CE4C]/30
+                      bg-[#97CE4C]/10
+                      px-3
+                      py-1.5
+                    "
                   >
 
                     <span
-                      class="text-sm
-                             font-bold
-                             text-[#97CE4C]"
+                      class="
+                        text-sm
+                        font-bold
+                        text-[#97CE4C]
+                      "
                     >
-                      {{ episodes.length }}
+                      {{ totalEpisodes }}
                     </span>
 
+
                     <span
-                      class="text-xs
-                             font-medium
-                             text-slate-300"
+                      class="
+                        text-xs
+                        font-medium
+                        text-slate-300
+                      "
                     >
                       episodios encontrados
                     </span>
@@ -114,9 +160,9 @@
         </ion-row>
 
 
-        <!-- ========================= -->
+        <!-- ================================= -->
         <!-- EPISODES -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
         @if (episodes.length > 0) {
 
@@ -147,11 +193,126 @@
 
           </ion-row>
 
+
+          <!-- ================================= -->
+          <!-- PAGINACIÓN -->
+          <!-- ================================= -->
+
+          <ion-row
+            class="
+              mt-6
+              items-center
+              justify-center
+            "
+          >
+
+            <ion-col
+              size="12"
+              class="flex justify-center"
+            >
+
+              <div
+                class="
+                  flex
+                  items-center
+                  gap-3
+                  rounded-2xl
+                  border
+                  border-white/10
+                  bg-[#0B1020]/95
+                  px-3
+                  py-3
+                "
+              >
+
+
+                <!-- =========================== -->
+                <!-- ANTERIOR -->
+                <!-- =========================== -->
+
+                <ion-button
+                  fill="clear"
+                  [disabled]="!canGoPrevious"
+                  (click)="previousPage()"
+                >
+
+                  <ion-icon
+                    slot="icon-only"
+                    name="chevron-back-outline"
+                  >
+                  </ion-icon>
+
+                </ion-button>
+
+
+                <!-- =========================== -->
+                <!-- PÁGINA ACTUAL -->
+                <!-- =========================== -->
+
+                <div
+                  class="
+                    flex
+                    min-w-[70px]
+                    flex-col
+                    items-center
+                  "
+                >
+
+                  <span
+                    class="
+                      text-lg
+                      font-black
+                      text-[#97CE4C]
+                    "
+                  >
+                    {{ currentPage }}
+                  </span>
+
+
+                  <span
+                    class="
+                      text-[10px]
+                      uppercase
+                      tracking-wider
+                      text-slate-400
+                    "
+                  >
+                    de {{ totalPages }}
+                  </span>
+
+                </div>
+
+
+                <!-- =========================== -->
+                <!-- SIGUIENTE -->
+                <!-- =========================== -->
+
+                <ion-button
+                  fill="clear"
+                  [disabled]="!canGoNext"
+                  (click)="nextPage()"
+                >
+
+                  <ion-icon
+                    slot="icon-only"
+                    name="chevron-forward-outline"
+                  >
+                  </ion-icon>
+
+                </ion-button>
+
+              </div>
+
+            </ion-col>
+
+          </ion-row>
+
         }
 
-        <!-- ========================= -->
+
+        <!-- ================================= -->
         <!-- SIN RESULTADOS -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
         @else {
 
@@ -163,33 +324,40 @@
             >
 
               <div
-                class="flex min-h-[45vh]
-                       items-center
-                       justify-center"
+                class="
+                  flex
+                  min-h-[45vh]
+                  items-center
+                  justify-center
+                "
               >
 
                 <div
-                  class="w-full
-                         max-w-sm
-                         rounded-2xl
-                         border
-                         border-white/10
-                         bg-[#0B1020]/95
-                         p-6
-                         text-center"
+                  class="
+                    w-full
+                    max-w-sm
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-[#0B1020]/95
+                    p-6
+                    text-center
+                  "
                 >
 
                   <div
-                    class="mx-auto
-                           flex
-                           h-16
-                           w-16
-                           items-center
-                           justify-center
-                           rounded-full
-                           border
-                           border-[#97CE4C]/30
-                           bg-[#97CE4C]/10"
+                    class="
+                      mx-auto
+                      flex
+                      h-16
+                      w-16
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-[#97CE4C]/30
+                      bg-[#97CE4C]/10
+                    "
                   >
 
                     <span class="text-2xl">
@@ -198,19 +366,25 @@
 
                   </div>
 
+
                   <h2
-                    class="mt-4
-                           text-lg
-                           font-bold
-                           text-white"
+                    class="
+                      mt-4
+                      text-lg
+                      font-bold
+                      text-white
+                    "
                   >
                     No encontramos episodios
                   </h2>
 
+
                   <p
-                    class="mt-2
-                           text-sm
-                           text-slate-400"
+                    class="
+                      mt-2
+                      text-sm
+                      text-slate-400
+                    "
                   >
                     No hay episodios que
                     coincidan con tu búsqueda.
