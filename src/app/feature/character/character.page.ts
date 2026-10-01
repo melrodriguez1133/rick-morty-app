@@ -14,12 +14,15 @@ import {
   IonInfiniteScrollContent
 } from '@ionic/angular';
 
+import { FormsModule } from '@angular/forms';
+
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 import { Router } from '@angular/router';
 
 import { CharacterService } from '../../core/services/character-service';
 import { CharacterModel } from '../../core/models/character.model';
+import { CharacterFilters } from '../../core/interface/character-filter.interface';
 
 import { CardComponent } from '../../shared/components/card/card.component';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
@@ -40,7 +43,8 @@ import { LoadingComponent } from '../../shared/components/loading/loading.compon
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     CardComponent,
-    LoadingComponent
+    LoadingComponent,
+    FormsModule
   ]
 })
 export class CharacterPage implements OnInit {
@@ -102,6 +106,20 @@ export class CharacterPage implements OnInit {
 
   rateLimitBlocked = false;
 
+  // ==========================================
+  // FILTROS
+  // ==========================================
+
+  filters: CharacterFilters = {
+  name: '',
+  status: '',
+  species: '',
+  type: '',
+  gender: ''
+};
+
+searchTerm = '';
+showFilters = false;
 
   // ==========================================
   // CONSTRUCTOR
@@ -159,8 +177,7 @@ export class CharacterPage implements OnInit {
     }
 
 
-    this.characterService
-      .getCharacters(1)
+    this.characterService.getFilteredCharacters(this.filters, 1)
       .subscribe({
 
         // ====================================
@@ -397,7 +414,10 @@ export class CharacterPage implements OnInit {
     // ========================================
 
     this.characterService
-      .getCharacters(nextPage)
+  .getFilteredCharacters(
+    this.filters,
+    nextPage
+  )
       .subscribe({
 
         // ====================================
@@ -629,5 +649,63 @@ export class CharacterPage implements OnInit {
     ]);
 
   }
+  // ==========================================
+  // BUSQUEDA
+  // ==========================================
 
+  onFilterChange(): void {
+  this.searchCharacters();
+}
+
+searchCharacters(): void {
+
+  this.loading = true;
+  this.loadingMore = false;
+
+  this.currentPage = 1;
+  this.totalPages = 0;
+  this.hasMore = true;
+
+  this.characters = [];
+
+  if (this.infiniteScroll) {
+    this.infiniteScroll.disabled = false;
+  }
+
+  this.characterService
+    .getFilteredCharacters(this.filters, 1)
+    .subscribe({
+
+      next: (response) => {
+
+        this.characters = response.results;
+
+        this.totalPages = response.info.pages;
+
+        this.hasMore =
+          this.currentPage < this.totalPages;
+
+        this.loading = false;
+
+        this.cdr.detectChanges();
+      },
+
+      error: (error) => {
+
+        console.error(
+          '❌ Error buscando personajes:',
+          error
+        );
+
+        this.characters = [];
+
+        this.loading = false;
+
+        this.hasMore = false;
+
+        this.cdr.detectChanges();
+      }
+
+    });
+}
 }
