@@ -23,7 +23,6 @@ import {
 
 import { addIcons } from 'ionicons';
 
-
 import { EpisodeService } from '../../core/services/episode-service';
 
 import { EpisodeModel } from '../../core/models/episode.model';
@@ -77,6 +76,13 @@ export class EpisodePage {
 
 
   // ==========================================
+  // TEMPORADA SELECCIONADA
+  // ==========================================
+
+  selectedSeason = '';
+
+
+  // ==========================================
   // LOADING
   // ==========================================
 
@@ -84,29 +90,18 @@ export class EpisodePage {
 
 
   // ==========================================
-  // PÁGINA ACTUAL
+  // PAGINACIÓN
   // ==========================================
 
   currentPage = 1;
 
-
-  // ==========================================
-  // TOTAL DE PÁGINAS
-  // ==========================================
-
   totalPages = 1;
-
-
-  // ==========================================
-  // TOTAL DE EPISODIOS
-  // ==========================================
 
   totalEpisodes = 0;
 
 
   constructor(
     private episodeService: EpisodeService,
-
     private cdr: ChangeDetectorRef
   ) {
 
@@ -124,11 +119,54 @@ export class EpisodePage {
 
   ionViewWillEnter(): void {
 
-    console.log(
-      '🟢 Entrando a Episodes'
-    );
-
     this.loadEpisodes();
+
+  }
+
+
+  // ==========================================
+  // BUSCAR POR NOMBRE
+  // ==========================================
+
+  searchEpisodes(): void {
+
+    if (this.filters.name) {
+
+      this.filters.name =
+        this.filters.name.trim();
+
+    }
+
+    this.loadEpisodes(1);
+
+  }
+
+
+  // ==========================================
+  // CAMBIAR TEMPORADA
+  // ==========================================
+
+  onSeasonChange(): void {
+
+    /*
+     * El select devuelve:
+     *
+     * ""
+     * S01
+     * S02
+     * S03
+     * S04
+     */
+
+    this.filters.episode =
+      this.selectedSeason;
+
+    /*
+     * Cada cambio de filtro
+     * vuelve a la primera página.
+     */
+
+    this.loadEpisodes(1);
 
   }
 
@@ -141,29 +179,10 @@ export class EpisodePage {
     page: number = 1
   ): void {
 
-    console.log(
-      '🔵 Cargando página:',
-      page
-    );
-
-
-    // ========================================
-    // LOADING
-    // ========================================
-
     this.loading = true;
-
-
-    // ========================================
-    // GUARDAR PÁGINA
-    // ========================================
 
     this.currentPage = page;
 
-
-    // ========================================
-    // PETICIÓN
-    // ========================================
 
     this.episodeService
       .getFilteredEpisodes(
@@ -176,60 +195,18 @@ export class EpisodePage {
           response: ApiResponse<EpisodeModel>
         ) => {
 
-          console.log(
-            '📦 Response:',
-            response
-          );
-
-
-          // ==================================
-          // GUARDAR EPISODIOS
-          // ==================================
-
           this.episodes =
             response.results;
-
-
-          // ==================================
-          // INFORMACIÓN DE PAGINACIÓN
-          // ==================================
 
           this.totalEpisodes =
             response.info.count;
 
-
           this.totalPages =
             response.info.pages;
 
-
-          // ==================================
-          // LOADING
-          // ==================================
-
           this.loading = false;
 
-
-          // ==================================
-          // DETECTAR CAMBIOS
-          // ==================================
-
           this.cdr.detectChanges();
-
-
-          console.log(
-            '🎬 Episodios:',
-            this.episodes.length
-          );
-
-          console.log(
-            '📄 Página:',
-            this.currentPage
-          );
-
-          console.log(
-            '📚 Total páginas:',
-            this.totalPages
-          );
 
         },
 
@@ -237,12 +214,15 @@ export class EpisodePage {
         error: (error) => {
 
           console.error(
-            '❌ Error cargando episodes:',
+            '❌ Error cargando episodios:',
             error
           );
 
-
           this.episodes = [];
+
+          this.totalEpisodes = 0;
+
+          this.totalPages = 1;
 
           this.loading = false;
 
@@ -261,19 +241,12 @@ export class EpisodePage {
 
   previousPage(): void {
 
-    if (this.currentPage <= 1) {
-
+    if (!this.canGoPrevious) {
       return;
-
     }
 
-
-    const previous =
-      this.currentPage - 1;
-
-
     this.loadEpisodes(
-      previous
+      this.currentPage - 1
     );
 
   }
@@ -285,29 +258,19 @@ export class EpisodePage {
 
   nextPage(): void {
 
-    if (
-      this.currentPage >=
-      this.totalPages
-    ) {
-
+    if (!this.canGoNext) {
       return;
-
     }
 
-
-    const next =
-      this.currentPage + 1;
-
-
     this.loadEpisodes(
-      next
+      this.currentPage + 1
     );
 
   }
 
 
   // ==========================================
-  // IR A UNA PÁGINA
+  // IR A PÁGINA
   // ==========================================
 
   goToPage(
@@ -323,16 +286,13 @@ export class EpisodePage {
 
     }
 
-
-    this.loadEpisodes(
-      page
-    );
+    this.loadEpisodes(page);
 
   }
 
 
   // ==========================================
-  // ¿PUEDE IR ATRÁS?
+  // PUEDE IR ATRÁS
   // ==========================================
 
   get canGoPrevious(): boolean {
@@ -343,13 +303,15 @@ export class EpisodePage {
 
 
   // ==========================================
-  // ¿PUEDE IR ADELANTE?
+  // PUEDE IR ADELANTE
   // ==========================================
 
   get canGoNext(): boolean {
 
-    return this.currentPage <
-      this.totalPages;
+    return (
+      this.currentPage <
+      this.totalPages
+    );
 
   }
 

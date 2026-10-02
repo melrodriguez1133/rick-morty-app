@@ -54,10 +54,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./feature/favorite/favorite.page')
             .then(m => m.FavoritePage)
-      }
+      },
+        {
+    path: 'profile',
+    loadComponent: () => import('./feature/profile/profile.page').then( m => m.ProfilePage)
+  },
+ 
 
     ]
   },
- 
+
 
 ];

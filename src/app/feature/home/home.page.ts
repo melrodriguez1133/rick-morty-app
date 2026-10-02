@@ -1,11 +1,14 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+
+import { RouterLink } from '@angular/router';
 
 import {
   IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonButton,
   IonIcon
 } from '@ionic/angular';
@@ -32,24 +35,37 @@ import { ApiResponse } from '../../core/models/api-response.model';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 
+
 @Component({
   selector: 'app-home',
+
   templateUrl: './home.page.html',
+
   styleUrls: ['./home.page.scss'],
 
+  standalone: true,
+
   imports: [
+
     CommonModule,
+
+    RouterLink,
+
     IonContent,
-    IonGrid,
-    IonRow,
-    IonCol,
     IonButton,
     IonIcon,
+
     CardComponent,
     LoadingComponent
+
   ]
 })
 export class HomePage {
+
+
+  // =====================================================
+  // DATOS
+  // =====================================================
 
   characters: CharacterModel[] = [];
 
@@ -57,29 +73,54 @@ export class HomePage {
 
   locations: LocationModel[] = [];
 
+
+  // =====================================================
+  // ESTADO DE CARGA
+  // =====================================================
+
   loading = false;
 
   private charactersLoaded = false;
+
   private episodesLoaded = false;
+
   private locationsLoaded = false;
 
 
+  // =====================================================
+  // CONSTRUCTOR
+  // =====================================================
+
   constructor(
+
     private characterService: CharacterService,
+
     private episodeService: EpisodeService,
+
     private locationService: LocationService,
+
     private cdr: ChangeDetectorRef
+
   ) {
 
     addIcons({
+
       arrowForwardOutline,
+
       peopleOutline,
+
       playCircleOutline,
+
       planetOutline
+
     });
 
   }
 
+
+  // =====================================================
+  // ENTRAR A HOME
+  // =====================================================
 
   ionViewWillEnter(): void {
 
@@ -90,34 +131,47 @@ export class HomePage {
   }
 
 
+  // =====================================================
+  // CARGAR HOME
+  // =====================================================
+
   loadHome(): void {
 
     console.log('🔵 Cargando Home...');
 
     this.loading = true;
 
+
+    // Reiniciar estados
+
     this.charactersLoaded = false;
+
     this.episodesLoaded = false;
+
     this.locationsLoaded = false;
 
 
-    // =========================
+    // =================================================
     // CHARACTERS
-    // =========================
+    // =================================================
 
     this.characterService
       .getCharacters(1)
       .subscribe({
 
-        next: (response: ApiResponse<CharacterModel>) => {
+        next: (
+          response: ApiResponse<CharacterModel>
+        ) => {
 
           this.characters =
             response.results.slice(0, 4);
+
 
           console.log(
             '👥 Characters:',
             this.characters
           );
+
 
           this.charactersLoaded = true;
 
@@ -125,12 +179,14 @@ export class HomePage {
 
         },
 
+
         error: (error) => {
 
           console.error(
             '❌ Error cargando characters:',
             error
           );
+
 
           this.characters = [];
 
@@ -143,23 +199,27 @@ export class HomePage {
       });
 
 
-    // =========================
+    // =================================================
     // EPISODES
-    // =========================
+    // =================================================
 
     this.episodeService
       .getEpisodes(1)
       .subscribe({
 
-        next: (response: ApiResponse<EpisodeModel>) => {
+        next: (
+          response: ApiResponse<EpisodeModel>
+        ) => {
 
           this.episodes =
             response.results.slice(0, 4);
+
 
           console.log(
             '🎬 Episodes:',
             this.episodes
           );
+
 
           this.episodesLoaded = true;
 
@@ -167,12 +227,14 @@ export class HomePage {
 
         },
 
+
         error: (error) => {
 
           console.error(
             '❌ Error cargando episodes:',
             error
           );
+
 
           this.episodes = [];
 
@@ -185,23 +247,27 @@ export class HomePage {
       });
 
 
-    // =========================
+    // =================================================
     // LOCATIONS
-    // =========================
+    // =================================================
 
     this.locationService
       .getLocations(1)
       .subscribe({
 
-        next: (response: ApiResponse<LocationModel>) => {
+        next: (
+          response: ApiResponse<LocationModel>
+        ) => {
 
           this.locations =
             response.results.slice(0, 4);
+
 
           console.log(
             '🌎 Locations:',
             this.locations
           );
+
 
           this.locationsLoaded = true;
 
@@ -209,12 +275,14 @@ export class HomePage {
 
         },
 
+
         error: (error) => {
 
           console.error(
             '❌ Error cargando locations:',
             error
           );
+
 
           this.locations = [];
 
@@ -229,17 +297,27 @@ export class HomePage {
   }
 
 
+  // =====================================================
+  // COMPROBAR CARGA COMPLETA
+  // =====================================================
+
   private checkLoading(): void {
 
     if (
+
       this.charactersLoaded &&
+
       this.episodesLoaded &&
+
       this.locationsLoaded
+
     ) {
 
       this.loading = false;
 
+
       this.cdr.detectChanges();
+
 
       console.log(
         '✅ Home completamente cargado'

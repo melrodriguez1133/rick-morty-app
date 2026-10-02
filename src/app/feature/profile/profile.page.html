@@ -1,0 +1,518 @@
+<ion-content
+  [fullscreen]="true"
+  class="bg-transparent"
+>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <!-- pt-24 deja espacio para que el header no tape la vista -->
+
+  <div
+    class="min-h-full
+           bg-transparent
+           px-4
+           pb-5
+           pt-10
+           sm:px-6
+           sm:pt-28
+           lg:px-8"
+  >
+
+    <div
+      class="mx-auto
+             w-full
+             max-w-3xl"
+    >
+
+      <!-- ================================= -->
+      <!-- TÍTULO -->
+      <!-- ================================= -->
+
+      <div
+        class="mb-6"
+      >
+
+        <h1
+          class="text-3xl
+                 font-bold
+                 tracking-tight
+                 text-white"
+        >
+          Mi perfil
+        </h1>
+
+        <p
+          class="mt-2
+                 text-sm
+                 text-slate-400"
+        >
+          Personaliza tu información
+        </p>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- CONTENEDOR DEL PERFIL -->
+      <!-- ================================= -->
+
+      <div
+        class="overflow-hidden
+               rounded-3xl
+               border
+               border-white/10
+               bg-[#151B2D]/80
+               shadow-[0_15px_40px_rgba(0,0,0,0.35)]
+               backdrop-blur-sm"
+      >
+
+
+        <!-- ================================= -->
+        <!-- CABECERA DEL PERFIL -->
+        <!-- ================================= -->
+
+        <div
+          class="border-b
+                 border-white/10
+                 px-6
+                 py-8
+                 sm:px-8"
+        >
+
+          <div
+            class="flex
+                   flex-col
+                   items-center
+                   gap-5
+                   sm:flex-row"
+          >
+
+            <!-- ================================= -->
+            <!-- ICONO -->
+            <!-- ================================= -->
+
+            <div
+              class="flex
+                     h-24
+                     w-24
+                     shrink-0
+                     items-center
+                     justify-center
+                     rounded-full
+                     border-2
+                     border-[#97CE4C]/40
+                     bg-[#0B1020]
+                     text-5xl
+                     shadow-[0_0_30px_rgba(151,206,76,0.15)]"
+            >
+
+              {{ profile.icon || '🧪' }}
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- INFORMACIÓN RESUMIDA -->
+            <!-- ================================= -->
+
+            <div
+              class="min-w-0
+                     text-center
+                     sm:text-left"
+            >
+
+              <h2
+                class="break-words
+                       text-2xl
+                       font-bold
+                       tracking-tight
+                       text-white
+                       sm:text-3xl"
+              >
+
+                {{ profile.name || 'Tu nombre' }}
+
+              </h2>
+
+
+              <p
+                class="mt-1
+                       text-sm
+                       font-medium
+                       text-[#97CE4C]"
+              >
+
+                @{{ profile.username || 'usuario' }}
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- FORMULARIO -->
+        <!-- ================================= -->
+
+        <div
+          class="space-y-6
+                 px-6
+                 py-6
+                 sm:px-8"
+        >
+
+
+          <!-- ================================= -->
+          <!-- NOMBRE -->
+          <!-- ================================= -->
+
+          <div>
+
+            <label
+              class="mb-2
+                     block
+                     text-sm
+                     font-medium
+                     text-slate-300"
+            >
+              Nombre
+            </label>
+
+
+            <div
+              class="relative"
+            >
+
+              <ion-icon
+                name="person-outline"
+                class="pointer-events-none
+                       absolute
+                       left-4
+                       top-1/2
+                       z-10
+                       -translate-y-1/2
+                       text-lg
+                       text-[#97CE4C]"
+              ></ion-icon>
+
+
+              <ion-input
+                [(ngModel)]="profile.name"
+                type="text"
+                placeholder="Ingresa tu nombre"
+                class="w-full
+                       rounded-2xl
+                       border
+                       border-white/10
+                       bg-[#0B1020]
+                       !text-white
+                       placeholder:text-slate-500"
+                style="
+                  --background: #0B1020;
+                  --color: white;
+                  --placeholder-color: #64748B;
+                  --padding-start: 48px;
+                  --padding-end: 16px;
+                  --border-radius: 16px;
+                "
+              ></ion-input>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- USUARIO -->
+          <!-- ================================= -->
+
+          <div>
+
+            <label
+              class="mb-2
+                     block
+                     text-sm
+                     font-medium
+                     text-slate-300"
+            >
+              Usuario
+            </label>
+
+
+            <div
+              class="relative"
+            >
+
+              <ion-icon
+                name="at-outline"
+                class="pointer-events-none
+                       absolute
+                       left-4
+                       top-1/2
+                       z-10
+                       -translate-y-1/2
+                       text-lg
+                       text-[#97CE4C]"
+              ></ion-icon>
+
+
+              <ion-input
+                [(ngModel)]="profile.username"
+                type="text"
+                placeholder="Ingresa tu usuario"
+                class="w-full
+                       rounded-2xl
+                       border
+                       border-white/10
+                       bg-[#0B1020]
+                       !text-white
+                       placeholder:text-slate-500"
+                style="
+                  --background: #0B1020;
+                  --color: white;
+                  --placeholder-color: #64748B;
+                  --padding-start: 48px;
+                  --padding-end: 16px;
+                  --border-radius: 16px;
+                "
+              ></ion-input>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- CORREO -->
+          <!-- ================================= -->
+
+          <div>
+
+            <label
+              class="mb-2
+                     block
+                     text-sm
+                     font-medium
+                     text-slate-300"
+            >
+              Correo electrónico
+            </label>
+
+
+            <div
+              class="relative"
+            >
+
+              <ion-icon
+                name="mail-outline"
+                class="pointer-events-none
+                       absolute
+                       left-4
+                       top-1/2
+                       z-10
+                       -translate-y-1/2
+                       text-lg
+                       text-[#97CE4C]"
+              ></ion-icon>
+
+
+              <ion-input
+                [(ngModel)]="profile.email"
+                type="email"
+                placeholder="correo@ejemplo.com"
+                class="w-full
+                       rounded-2xl
+                       border
+                       border-white/10
+                       bg-[#0B1020]
+                       !text-white
+                       placeholder:text-slate-500"
+                style="
+                  --background: #0B1020;
+                  --color: white;
+                  --placeholder-color: #64748B;
+                  --padding-start: 48px;
+                  --padding-end: 16px;
+                  --border-radius: 16px;
+                "
+              ></ion-input>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- ICONO -->
+          <!-- ================================= -->
+
+          <div>
+
+            <label
+              class="mb-2
+                     block
+                     text-sm
+                     font-medium
+                     text-slate-300"
+            >
+              Icono de perfil
+            </label>
+
+
+            <div
+              class="relative"
+            >
+
+              <ion-input
+                [(ngModel)]="profile.icon"
+                type="text"
+                maxlength="4"
+                placeholder="🧪"
+                class="w-full
+                       rounded-2xl
+                       border
+                       border-white/10
+                       bg-[#0B1020]
+                       !text-white
+                       placeholder:text-slate-500"
+                style="
+                  --background: #0B1020;
+                  --color: white;
+                  --placeholder-color: #64748B;
+                  --padding-start: 16px;
+                  --padding-end: 16px;
+                  --border-radius: 16px;
+                "
+              ></ion-input>
+
+            </div>
+
+
+            <p
+              class="mt-2
+                     text-xs
+                     text-slate-500"
+            >
+              Puedes utilizar un emoji como icono.
+            </p>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- MENSAJE -->
+          <!-- ================================= -->
+
+          <div>
+
+            <label
+              class="mb-2
+                     block
+                     text-sm
+                     font-medium
+                     text-slate-300"
+            >
+              Mensaje
+            </label>
+
+
+            <div
+              class="relative"
+            >
+
+              <ion-icon
+                name="chatbubble-outline"
+                class="pointer-events-none
+                       absolute
+                       left-4
+                       top-4
+                       z-10
+                       text-lg
+                       text-[#97CE4C]"
+              ></ion-icon>
+
+
+              <ion-textarea
+                [(ngModel)]="profile.message"
+                rows="4"
+                placeholder="Escribe algo sobre ti..."
+                class="w-full
+                       rounded-2xl
+                       border
+                       border-white/10
+                       bg-[#0B1020]
+                       !text-white
+                       placeholder:text-slate-500"
+                style="
+                  --background: #0B1020;
+                  --color: white;
+                  --placeholder-color: #64748B;
+                  --padding-start: 48px;
+                  --padding-end: 16px;
+                  --padding-top: 16px;
+                  --padding-bottom: 16px;
+                  --border-radius: 16px;
+                "
+              ></ion-textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- BOTÓN GUARDAR -->
+          <!-- ================================= -->
+
+          <div
+            class="flex
+                   justify-end
+                   border-t
+                   border-white/10
+                   pt-6"
+          >
+
+            <ion-button
+              (click)="saveProfile()"
+              fill="solid"
+              class="!m-0"
+              style="
+                --background: #97CE4C;
+                --background-hover: #a8df5d;
+                --color: #0B1020;
+                --border-radius: 14px;
+                --box-shadow: none;
+              "
+            >
+
+              <ion-icon
+                slot="start"
+                name="save-outline"
+              ></ion-icon>
+
+              Guardar cambios
+
+            </ion-button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- ESPACIO INFERIOR -->
+      <!-- ================================= -->
+
+      <div
+        class="h-8"
+      ></div>
+
+    </div>
+
+  </div>
+
+</ion-content>

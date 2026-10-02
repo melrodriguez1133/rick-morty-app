@@ -6,7 +6,7 @@
   @if (loading) {
 
     <!-- ================================= -->
-    <!-- LOADING INICIAL -->
+    <!-- LOADING -->
     <!-- ================================= -->
 
     <app-loading></app-loading>
@@ -19,17 +19,11 @@
     <!-- CONTENIDO PRINCIPAL -->
     <!-- ================================= -->
 
-    <div
-      class="
-        px-4
-        pb-8
-        pt-16
-      "
-    >
+    <div class="px-4 pb-8 pt-16">
 
       <ion-grid class="p-0">
 
-      <!-- ================================= -->
+        <!-- ================================= -->
         <!-- HEADER -->
         <!-- ================================= -->
 
@@ -52,13 +46,7 @@
 
               <!-- LABEL -->
 
-              <div
-                class="
-                  flex
-                  items-center
-                  gap-2
-                "
-              >
+              <div class="flex items-center gap-2">
 
                 <span
                   class="
@@ -70,7 +58,6 @@
                     shadow-[0_0_10px_#97CE4C]
                   "
                 ></span>
-
 
                 <span
                   class="
@@ -151,7 +138,6 @@
                       {{ characters.length }}
                     </span>
 
-
                     <span
                       class="
                         text-xs
@@ -176,124 +162,512 @@
 
 
         <!-- ================================= -->
-        <!-- Buscador -->
+        <!-- BUSCADOR -->
         <!-- ================================= -->
 
-<div class="flex h-14 w-full items-center gap-2 rounded-2xl border border-slate-700 bg-black px-2 mt-4" >
-   <!-- Campo de búsqueda -->
-     <input type="search" [(ngModel)]="filters.name" placeholder="Buscar personaje..." enterkeyhint="search" (keyup.enter)="searchCharacters()" autocomplete="off" class="!m-0 !min-h-0 !flex-1 !border-0 !bg-transparent !px-3 !py-0 !text-base !text-white !outline-none !shadow-none placeholder:!text-slate-400" />
-      <!-- Botón circular --> 
- <button
-  type="button"
-  (click)="searchCharacters()"
-  [disabled]="!filters.name?.trim()"
-  aria-label="Buscar personaje"
-  class="!m-0 !h-10 !w-10 !min-h-0 !min-w-0 !shrink-0 !rounded-full !border-0 !p-0 !aspect-square flex items-center justify-center bg-green-500 text-black transition-all duration-200 hover:bg-green-400 active:scale-90 disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-400 disabled:opacity-50"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="h-5 w-5"
-  >
-    <circle cx="11" cy="11" r="7"></circle>
-    <path d="m20 20-4-4"></path>
-  </svg>
-</button>
-  </div>
-<div class="mt-3 flex gap-2 overflow-x-auto pb-1">
+        <div
+          class="
+            mt-4
+            flex
+            h-14
+            w-full
+            items-center
+            gap-2
+            rounded-2xl
+            border
+            border-white/10
+            bg-[#05070D]
+            px-2
+            shadow-[0_8px_20px_rgba(0,0,0,0.25)]
+          "
+        >
 
-  <!-- ESTADO -->
-  <div class="relative shrink-0">
-    <select
-      [(ngModel)]="filters.status"
-      (ngModelChange)="onFilterChange()"
-      class="appearance-none rounded-full border border-slate-700 bg-slate-900 py-2 pl-4 pr-9 text-sm font-medium text-white outline-none transition-colors focus:border-green-500"
-    >
-      <option value="">Estado: Todos</option>
-      <option value="alive">Estado: Vivo</option>
-      <option value="dead">Estado: Muerto</option>
-      <option value="unknown">Estado: Desconocido</option>
-    </select>
+          <!-- INPUT -->
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-400"
-    >
-      <path d="m6 9 6 6 6-6"></path>
-    </svg>
-  </div>
+          <input
+            type="search"
+            [(ngModel)]="filters.name"
+            placeholder="Buscar personaje..."
+            enterkeyhint="search"
+            (keyup.enter)="searchCharacters()"
+            autocomplete="off"
+            class="
+              !m-0
+              !min-h-0
+              !flex-1
+              !border-0
+              !bg-transparent
+              !px-3
+              !py-0
+              !text-base
+              !text-white
+              !outline-none
+              !shadow-none
+              placeholder:!text-slate-500
+            "
+          />
 
 
-  <!-- ESPECIE -->
-  <div class="relative shrink-0">
-    <select
-      [(ngModel)]="filters.species"
-      (ngModelChange)="onFilterChange()"
-      class="appearance-none rounded-full border border-slate-700 bg-slate-900 py-2 pl-4 pr-9 text-sm font-medium text-white outline-none transition-colors focus:border-green-500"
-    >
-      <option value="">Especie: Todas</option>
-      <option value="Human">Especie: Humano</option>
-      <option value="Alien">Especie: Alien</option>
-      <option value="Humanoid">Especie: Humanoide</option>
-      <option value="Animal">Especie: Animal</option>
-      <option value="Robot">Especie: Robot</option>
-    </select>
+          <!-- BOTÓN BUSCAR -->
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-400"
-    >
-      <path d="m6 9 6 6 6-6"></path>
-    </svg>
-  </div>
+          <button
+            type="button"
+            (click)="searchCharacters()"
+            [disabled]="!filters.name?.trim()"
+            aria-label="Buscar personaje"
+            class="
+              !m-0
+              !h-10
+              !w-10
+              !min-h-0
+              !min-w-0
+              !shrink-0
+              !rounded-full
+              !border-0
+              !p-0
+              !aspect-square
+              flex
+              items-center
+              justify-center
+              bg-[#97CE4C]
+              text-[#0B1020]
+              transition-all
+              duration-200
+              hover:bg-[#A8DF5A]
+              active:scale-90
+              disabled:cursor-not-allowed
+              disabled:bg-slate-700
+              disabled:text-slate-500
+              disabled:opacity-70
+            "
+          >
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+              ></circle>
+
+              <path
+                d="m20 20-4-4"
+              ></path>
+
+            </svg>
+
+          </button>
+
+        </div>
 
 
-  <!-- GÉNERO -->
-  <div class="relative shrink-0">
-    <select
-      [(ngModel)]="filters.gender"
-      (ngModelChange)="onFilterChange()"
-      class="appearance-none rounded-full border border-slate-700 bg-slate-900 py-2 pl-4 pr-9 text-sm font-medium text-white outline-none transition-colors focus:border-green-500"
-    >
-      <option value="">Género: Todos</option>
-      <option value="female">Género: Femenino</option>
-      <option value="male">Género: Masculino</option>
-      <option value="genderless">Género: Sin género</option>
-      <option value="unknown">Género: Desconocido</option>
-    </select>
+        <!-- ================================= -->
+        <!-- FILTROS -->
+        <!-- ================================= -->
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-400"
-    >
-      <path d="m6 9 6 6 6-6"></path>
-    </svg>
-  </div>
+        <div
+          class="
+            mt-3
+            rounded-2xl
+            border
+            border-white/10
+            bg-[#0B1020]/90
+            p-2
+            shadow-[0_8px_20px_rgba(0,0,0,0.25)]
+          "
+        >
 
-</div>
+          <!-- HEADER FILTROS -->
+
+          <div
+            class="
+              mb-2
+              flex
+              items-center
+              gap-2
+              px-2
+            "
+          >
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4 text-[#97CE4C]"
+            >
+
+              <path d="M4 5h16"></path>
+              <path d="M7 12h10"></path>
+              <path d="M10 19h4"></path>
+
+            </svg>
+
+            <span
+              class="
+                text-[11px]
+                font-bold
+                uppercase
+                tracking-[0.15em]
+                text-slate-400
+              "
+            >
+              Filtrar personajes
+            </span>
+
+          </div>
+
+
+          <!-- CONTENEDOR FILTROS -->
+
+          <div
+            class="
+              flex
+              gap-2
+              overflow-x-auto
+              px-1
+              pb-1
+              scrollbar-hide
+            "
+          >
+
+            <!-- ================================= -->
+            <!-- ESTADO -->
+            <!-- ================================= -->
+
+            <div
+              class="
+                relative
+                min-w-[145px]
+                flex-1
+              "
+            >
+
+              <select
+                [(ngModel)]="filters.status"
+                (ngModelChange)="onFilterChange()"
+                style="color: white; color-scheme: dark;"
+                class="
+                  block
+                  h-11
+                  w-full
+                  appearance-none
+                  rounded-xl
+                  border
+                  border-white/10
+                  bg-[#151B2D]
+                  px-3
+                  pr-9
+                  text-sm
+                  font-medium
+                  !text-white
+                  outline-none
+                  transition-all
+                  duration-200
+                  focus:border-[#97CE4C]/60
+                  focus:bg-[#192238]
+                  focus:ring-2
+                  focus:ring-[#97CE4C]/10
+                "
+              >
+
+                <option
+                  value=""
+                  style="color: white; background: #151B2D;"
+                >
+                  Estado: Todos
+                </option>
+
+                <option
+                  value="alive"
+                  style="color: white; background: #151B2D;"
+                >
+                  Estado: Vivo
+                </option>
+
+                <option
+                  value="dead"
+                  style="color: white; background: #151B2D;"
+                >
+                  Estado: Muerto
+                </option>
+
+                <option
+                  value="unknown"
+                  style="color: white; background: #151B2D;"
+                >
+                  Estado: Desconocido
+                </option>
+
+              </select>
+
+
+              <!-- FLECHA -->
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="
+                  pointer-events-none
+                  absolute
+                  right-3
+                  top-1/2
+                  h-4
+                  w-4
+                  -translate-y-1/2
+                  text-[#97CE4C]
+                "
+              >
+
+                <path d="m6 9 6 6 6-6"></path>
+
+              </svg>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- ESPECIE -->
+            <!-- ================================= -->
+
+            <div
+              class="
+                relative
+                min-w-[150px]
+                flex-1
+              "
+            >
+
+              <select
+                [(ngModel)]="filters.species"
+                (ngModelChange)="onFilterChange()"
+                style="color: white; color-scheme: dark;"
+                class="
+                  block
+                  h-11
+                  w-full
+                  appearance-none
+                  rounded-xl
+                  border
+                  border-white/10
+                  bg-[#151B2D]
+                  px-3
+                  pr-9
+                  text-sm
+                  font-medium
+                  !text-white
+                  outline-none
+                  transition-all
+                  duration-200
+                  focus:border-[#97CE4C]/60
+                  focus:bg-[#192238]
+                  focus:ring-2
+                  focus:ring-[#97CE4C]/10
+                "
+              >
+
+                <option
+                  value=""
+                  style="color: white; background: #151B2D;"
+                >
+                  Especie: Todas
+                </option>
+
+                <option
+                  value="Human"
+                  style="color: white; background: #151B2D;"
+                >
+                  Especie: Humano
+                </option>
+
+                <option
+                  value="Alien"
+                  style="color: white; background: #151B2D;"
+                >
+                  Especie: Alien
+                </option>
+
+                <option
+                  value="Humanoid"
+                  style="color: white; background: #151B2D;"
+                >
+                  Especie: Humanoide
+                </option>
+
+                <option
+                  value="Animal"
+                  style="color: white; background: #151B2D;"
+                >
+                  Especie: Animal
+                </option>
+
+                <option
+                  value="Robot"
+                  style="color: white; background: #151B2D;"
+                >
+                  Especie: Robot
+                </option>
+
+              </select>
+
+
+              <!-- FLECHA -->
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="
+                  pointer-events-none
+                  absolute
+                  right-3
+                  top-1/2
+                  h-4
+                  w-4
+                  -translate-y-1/2
+                  text-[#97CE4C]
+                "
+              >
+
+                <path d="m6 9 6 6 6-6"></path>
+
+              </svg>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- GÉNERO -->
+            <!-- ================================= -->
+
+            <div
+              class="
+                relative
+                min-w-[145px]
+                flex-1
+              "
+            >
+
+              <select
+                [(ngModel)]="filters.gender"
+                (ngModelChange)="onFilterChange()"
+                style="color: white; color-scheme: dark;"
+                class="
+                  block
+                  h-11
+                  w-full
+                  appearance-none
+                  rounded-xl
+                  border
+                  border-white/10
+                  bg-[#151B2D]
+                  px-3
+                  pr-9
+                  text-sm
+                  font-medium
+                  !text-white
+                  outline-none
+                  transition-all
+                  duration-200
+                  focus:border-[#97CE4C]/60
+                  focus:bg-[#192238]
+                  focus:ring-2
+                  focus:ring-[#97CE4C]/10
+                "
+              >
+
+                <option
+                  value=""
+                  style="color: white; background: #151B2D;"
+                >
+                  Género: Todos
+                </option>
+
+                <option
+                  value="female"
+                  style="color: white; background: #151B2D;"
+                >
+                  Género: Femenino
+                </option>
+
+                <option
+                  value="male"
+                  style="color: white; background: #151B2D;"
+                >
+                  Género: Masculino
+                </option>
+
+                <option
+                  value="genderless"
+                  style="color: white; background: #151B2D;"
+                >
+                  Género: Sin género
+                </option>
+
+                <option
+                  value="unknown"
+                  style="color: white; background: #151B2D;"
+                >
+                  Género: Desconocido
+                </option>
+
+              </select>
+
+
+              <!-- FLECHA -->
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="
+                  pointer-events-none
+                  absolute
+                  right-3
+                  top-1/2
+                  h-4
+                  w-4
+                  -translate-y-1/2
+                  text-[#97CE4C]
+                "
+              >
+
+                <path d="m6 9 6 6 6-6"></path>
+
+              </svg>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
         <!-- ================================= -->
         <!-- PERSONAJES -->
         <!-- ================================= -->
@@ -315,16 +689,21 @@
               >
 
                 <div
-  class="cursor-pointer"
-  (click)="goToCharacter(character.id)"
->
-  <app-card
-    [image]="character.image"
-    [title]="character.name"
-    [subtitle]="character.status"
-    [description]="character.species">
-  </app-card>
-</div>
+                  class="cursor-pointer"
+                  (click)="goToCharacter(character.id)"
+                >
+
+                  <app-card
+                    [image]="character.image"
+                    [title]="character.name"
+                    [subtitle]="character.status"
+                    [description]="character.species"
+                      [itemId]="character.id"
+                      favoriteType="character"
+                  >
+                  </app-card>
+
+                </div>
 
               </ion-col>
 

@@ -1,6 +1,13 @@
-<ion-content>
+<ion-content
+  [fullscreen]="false"
+  class="[--background:transparent]"
+>
 
   @if (loading) {
+
+    <!-- ================================= -->
+    <!-- LOADING -->
+    <!-- ================================= -->
 
     <app-loading></app-loading>
 
@@ -8,13 +15,11 @@
 
   @else {
 
-    <div
-      class="
-        px-4
-        pb-8
-        pt-16
-      "
-    >
+    <!-- ================================= -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ================================= -->
+
+    <div class="px-4 pb-8 pt-16">
 
       <ion-grid class="p-0">
 
@@ -42,24 +47,18 @@
 
               <!-- LABEL -->
 
-              <div
-                class="
-                  flex
-                  items-center
-                  gap-2
-                "
-              >
+              <div class="flex items-center gap-2">
 
                 <span
                   class="
                     h-2.5
                     w-2.5
+                    shrink-0
                     rounded-full
                     bg-[#97CE4C]
                     shadow-[0_0_10px_#97CE4C]
                   "
                 ></span>
-
 
                 <span
                   class="
@@ -76,7 +75,7 @@
               </div>
 
 
-              <!-- TITULO -->
+              <!-- TÍTULO -->
 
               <h1
                 class="
@@ -96,6 +95,7 @@
               <p
                 class="
                   mt-2
+                  max-w-md
                   text-sm
                   leading-5
                   text-slate-300
@@ -106,7 +106,9 @@
               </p>
 
 
+              <!-- ================================= -->
               <!-- CONTADOR -->
+              <!-- ================================= -->
 
               @if (episodes.length > 0) {
 
@@ -136,7 +138,6 @@
                       {{ totalEpisodes }}
                     </span>
 
-
                     <span
                       class="
                         text-xs
@@ -161,7 +162,294 @@
 
 
         <!-- ================================= -->
-        <!-- EPISODES -->
+        <!-- BUSCADOR -->
+        <!-- ================================= -->
+
+        <div
+          class="
+            mt-4
+            flex
+            h-14
+            w-full
+            items-center
+            gap-2
+            rounded-2xl
+            border
+            border-white/10
+            bg-[#05070D]
+            px-2
+            shadow-[0_8px_20px_rgba(0,0,0,0.25)]
+          "
+        >
+
+          <input
+            type="search"
+            [(ngModel)]="filters.name"
+            placeholder="Buscar episodio..."
+            enterkeyhint="search"
+            (keyup.enter)="searchEpisodes()"
+            autocomplete="off"
+            class="
+              !m-0
+              !min-h-0
+              !flex-1
+              !border-0
+              !bg-transparent
+              !px-3
+              !py-0
+              !text-base
+              !text-white
+              !outline-none
+              !shadow-none
+              placeholder:!text-slate-500
+            "
+          />
+
+
+          <!-- BOTÓN BUSCAR -->
+
+          <button
+            type="button"
+            (click)="searchEpisodes()"
+            [disabled]="!filters.name?.trim()"
+            aria-label="Buscar episodio"
+            class="
+              !m-0
+              !h-10
+              !w-10
+              !min-h-0
+              !min-w-0
+              !shrink-0
+              !rounded-full
+              !border-0
+              !p-0
+              !aspect-square
+              flex
+              items-center
+              justify-center
+              bg-[#97CE4C]
+              text-[#0B1020]
+              transition-all
+              duration-200
+              hover:bg-[#A8DF5A]
+              active:scale-90
+              disabled:cursor-not-allowed
+              disabled:bg-slate-700
+              disabled:text-slate-500
+              disabled:opacity-70
+            "
+          >
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+              ></circle>
+
+              <path
+                d="m20 20-4-4"
+              ></path>
+
+            </svg>
+
+          </button>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- FILTROS -->
+        <!-- ================================= -->
+
+        <div
+          class="
+            mt-3
+            rounded-2xl
+            border
+            border-white/10
+            bg-[#0B1020]/90
+            p-2
+            shadow-[0_8px_20px_rgba(0,0,0,0.25)]
+          "
+        >
+
+          <!-- HEADER FILTROS -->
+
+          <div
+            class="
+              mb-2
+              flex
+              items-center
+              gap-2
+              px-2
+            "
+          >
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4 text-[#97CE4C]"
+            >
+
+              <path d="M4 5h16"></path>
+              <path d="M7 12h10"></path>
+              <path d="M10 19h4"></path>
+
+            </svg>
+
+            <span
+              class="
+                text-[11px]
+                font-bold
+                uppercase
+                tracking-[0.15em]
+                text-slate-400
+              "
+            >
+              Filtrar episodios
+            </span>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- SELECT TEMPORADA -->
+          <!-- ================================= -->
+
+          <div class="relative w-full">
+
+            <select
+              [(ngModel)]="selectedSeason"
+              (ngModelChange)="onSeasonChange()"
+              style="color: white; color-scheme: dark;"
+              class="
+                block
+                h-11
+                w-full
+                appearance-none
+                rounded-xl
+                border
+                border-white/10
+                bg-[#151B2D]
+                px-3
+                pr-10
+                text-sm
+                font-medium
+                !text-white
+                outline-none
+                transition-all
+                duration-200
+                focus:border-[#97CE4C]/60
+                focus:bg-[#192238]
+                focus:ring-2
+                focus:ring-[#97CE4C]/10
+              "
+            >
+
+              <option
+                value=""
+                style="
+                  color: white;
+                  background: #151B2D;
+                "
+              >
+                Temporada: Todas
+              </option>
+
+              <option
+                value="S01"
+                style="
+                  color: white;
+                  background: #151B2D;
+                "
+              >
+                Temporada 1
+              </option>
+
+              <option
+                value="S02"
+                style="
+                  color: white;
+                  background: #151B2D;
+                "
+              >
+                Temporada 2
+              </option>
+
+              <option
+                value="S03"
+                style="
+                  color: white;
+                  background: #151B2D;
+                "
+              >
+                Temporada 3
+              </option>
+
+              <option
+                value="S04"
+                style="
+                  color: white;
+                  background: #151B2D;
+                "
+              >
+                Temporada 4
+              </option>
+
+            </select>
+
+
+            <!-- FLECHA -->
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="
+                pointer-events-none
+                absolute
+                right-3
+                top-1/2
+                h-4
+                w-4
+                -translate-y-1/2
+                text-[#97CE4C]
+              "
+            >
+
+              <path
+                d="m6 9 6 6 6-6"
+              ></path>
+
+            </svg>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- EPISODIOS -->
         <!-- ================================= -->
 
         @if (episodes.length > 0) {
@@ -184,6 +472,8 @@
                   [title]="episode.name"
                   [subtitle]="episode.episode"
                   [description]="episode.air_date"
+                    [itemId]="episode.id"
+  favoriteType="episode"
                 >
                 </app-card>
 
@@ -225,15 +515,13 @@
                 "
               >
 
-
-                <!-- =========================== -->
                 <!-- ANTERIOR -->
-                <!-- =========================== -->
 
                 <ion-button
                   fill="clear"
                   [disabled]="!canGoPrevious"
                   (click)="previousPage()"
+                  class="text-white"
                 >
 
                   <ion-icon
@@ -245,9 +533,7 @@
                 </ion-button>
 
 
-                <!-- =========================== -->
-                <!-- PÁGINA ACTUAL -->
-                <!-- =========================== -->
+                <!-- PÁGINA -->
 
                 <div
                   class="
@@ -268,7 +554,6 @@
                     {{ currentPage }}
                   </span>
 
-
                   <span
                     class="
                       text-[10px]
@@ -283,14 +568,13 @@
                 </div>
 
 
-                <!-- =========================== -->
                 <!-- SIGUIENTE -->
-                <!-- =========================== -->
 
                 <ion-button
                   fill="clear"
                   [disabled]="!canGoNext"
                   (click)="nextPage()"
+                  class="text-white"
                 >
 
                   <ion-icon
@@ -342,6 +626,7 @@
                     bg-[#0B1020]/95
                     p-6
                     text-center
+                    shadow-[0_15px_40px_rgba(0,0,0,0.4)]
                   "
                 >
 
@@ -383,6 +668,7 @@
                     class="
                       mt-2
                       text-sm
+                      leading-5
                       text-slate-400
                     "
                   >

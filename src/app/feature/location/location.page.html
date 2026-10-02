@@ -1,18 +1,33 @@
-<ion-content>
+<ion-content
+  [fullscreen]="false"
+  class="[--background:transparent]"
+>
 
   @if (loading) {
 
-    <app-loading></app-loading>
+    <!-- ================================= -->
+    <!-- LOADING -->
+    <!-- ================================= -->
 
-  } @else {
+    <div class="px-4 pb-8 pt-16">
+      <app-loading></app-loading>
+    </div>
+
+  }
+
+  @else {
+
+    <!-- ================================= -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ================================= -->
 
     <div class="px-4 pb-8 pt-16">
 
       <ion-grid class="p-0">
 
-        <!-- ========================= -->
+        <!-- ================================= -->
         <!-- HEADER -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
         <ion-row>
 
@@ -22,28 +37,38 @@
           >
 
             <div
-              class="rounded-2xl
-                     border border-white/10
-                     bg-[#0B1020]/95
-                     px-5 py-5
-                     shadow-[0_8px_25px_rgba(0,0,0,0.35)]"
+              class="
+                rounded-2xl
+                border border-white/10
+                bg-[#0B1020]/95
+                px-5 py-5
+                shadow-[0_8px_25px_rgba(0,0,0,0.35)]
+              "
             >
+
+              <!-- LABEL -->
 
               <div class="flex items-center gap-2">
 
                 <span
-                  class="h-2.5 w-2.5
-                         rounded-full
-                         bg-[#97CE4C]
-                         shadow-[0_0_10px_#97CE4C]"
+                  class="
+                    h-2.5
+                    w-2.5
+                    shrink-0
+                    rounded-full
+                    bg-[#97CE4C]
+                    shadow-[0_0_10px_#97CE4C]
+                  "
                 ></span>
 
                 <span
-                  class="text-[11px]
-                         font-bold
-                         uppercase
-                         tracking-[0.2em]
-                         text-[#97CE4C]"
+                  class="
+                    text-[11px]
+                    font-bold
+                    uppercase
+                    tracking-[0.2em]
+                    text-[#97CE4C]
+                  "
                 >
                   Rick & Morty
                 </span>
@@ -51,55 +76,75 @@
               </div>
 
 
+              <!-- TÍTULO -->
+
               <h1
-                class="mt-2
-                       text-3xl
-                       font-black
-                       tracking-tight
-                       text-white"
+                class="
+                  mt-2
+                  text-3xl
+                  font-black
+                  tracking-tight
+                  text-white
+                "
               >
                 Locations
               </h1>
 
 
+              <!-- DESCRIPCIÓN -->
+
               <p
-                class="mt-2
-                       text-sm
-                       leading-5
-                       text-slate-300"
+                class="
+                  mt-2
+                  max-w-md
+                  text-sm
+                  leading-5
+                  text-slate-300
+                "
               >
                 Explora los lugares y dimensiones
                 del multiverso.
               </p>
 
 
+              <!-- ================================= -->
+              <!-- CONTADOR -->
+              <!-- ================================= -->
+
               @if (locations.length > 0) {
 
                 <div class="mt-4">
 
                   <span
-                    class="inline-flex
-                           items-center
-                           gap-2
-                           rounded-full
-                           border
-                           border-[#97CE4C]/30
-                           bg-[#97CE4C]/10
-                           px-3 py-1.5"
+                    class="
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-full
+                      border
+                      border-[#97CE4C]/30
+                      bg-[#97CE4C]/10
+                      px-3
+                      py-1.5
+                    "
                   >
 
                     <span
-                      class="text-sm
-                             font-bold
-                             text-[#97CE4C]"
+                      class="
+                        text-sm
+                        font-bold
+                        text-[#97CE4C]
+                      "
                     >
                       {{ totalLocations }}
                     </span>
 
                     <span
-                      class="text-xs
-                             font-medium
-                             text-slate-300"
+                      class="
+                        text-xs
+                        font-medium
+                        text-slate-300
+                      "
                     >
                       ubicaciones encontradas
                     </span>
@@ -117,9 +162,505 @@
         </ion-row>
 
 
-        <!-- ========================= -->
+        <!-- ================================= -->
+        <!-- BUSCADOR -->
+        <!-- ================================= -->
+
+        <div
+          class="
+            mt-4
+            flex
+            h-14
+            w-full
+            items-center
+            gap-2
+            rounded-2xl
+            border
+            border-white/10
+            bg-[#05070D]
+            px-2
+            shadow-[0_8px_20px_rgba(0,0,0,0.25)]
+          "
+        >
+
+          <input
+            type="search"
+            [(ngModel)]="filters.name"
+            placeholder="Buscar ubicación..."
+            enterkeyhint="search"
+            (keyup.enter)="searchLocations()"
+            autocomplete="off"
+            class="
+              !m-0
+              !min-h-0
+              !flex-1
+              !border-0
+              !bg-transparent
+              !px-3
+              !py-0
+              !text-base
+              !text-white
+              !outline-none
+              !shadow-none
+              placeholder:!text-slate-500
+            "
+          />
+
+
+          <!-- BOTÓN BUSCAR -->
+
+          <button
+            type="button"
+            (click)="searchLocations()"
+            [disabled]="!filters.name?.trim()"
+            aria-label="Buscar ubicación"
+            class="
+              !m-0
+              !h-10
+              !w-10
+              !min-h-0
+              !min-w-0
+              !shrink-0
+              !rounded-full
+              !border-0
+              !p-0
+              !aspect-square
+              flex
+              items-center
+              justify-center
+              bg-[#97CE4C]
+              text-[#0B1020]
+              transition-all
+              duration-200
+              hover:bg-[#A8DF5A]
+              active:scale-90
+              disabled:cursor-not-allowed
+              disabled:bg-slate-700
+              disabled:text-slate-500
+              disabled:opacity-70
+            "
+          >
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+              ></circle>
+
+              <path
+                d="m20 20-4-4"
+              ></path>
+
+            </svg>
+
+          </button>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- FILTROS -->
+        <!-- ================================= -->
+
+        <div
+          class="
+            mt-3
+            rounded-2xl
+            border
+            border-white/10
+            bg-[#0B1020]/90
+            p-2
+            shadow-[0_8px_20px_rgba(0,0,0,0.25)]
+          "
+        >
+
+          <!-- HEADER FILTROS -->
+
+          <div
+            class="
+              mb-2
+              flex
+              items-center
+              gap-2
+              px-2
+            "
+          >
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4 text-[#97CE4C]"
+            >
+
+              <path d="M4 5h16"></path>
+              <path d="M7 12h10"></path>
+              <path d="M10 19h4"></path>
+
+            </svg>
+
+            <span
+              class="
+                text-[11px]
+                font-bold
+                uppercase
+                tracking-[0.15em]
+                text-slate-400
+              "
+            >
+              Filtrar ubicaciones
+            </span>
+
+          </div>
+
+
+          <!-- CONTENEDOR -->
+
+          <div
+            class="
+              flex
+              gap-2
+              overflow-x-auto
+              px-1
+              pb-1
+              scrollbar-hide
+            "
+          >
+
+
+            <!-- ================================= -->
+            <!-- TIPO -->
+            <!-- ================================= -->
+
+            <div
+              class="
+                relative
+                min-w-[180px]
+                flex-1
+              "
+            >
+
+              <select
+                [ngModel]="filters.type || ''"
+                (ngModelChange)="filters.type = $event; onFilterChange()"
+                style="color: white; color-scheme: dark;"
+                class="
+                  block
+                  h-11
+                  w-full
+                  appearance-none
+                  rounded-xl
+                  border
+                  border-white/10
+                  bg-[#151B2D]
+                  px-3
+                  pr-10
+                  text-sm
+                  font-medium
+                  !text-white
+                  outline-none
+                  transition-all
+                  duration-200
+                  focus:border-[#97CE4C]/60
+                  focus:bg-[#192238]
+                  focus:ring-2
+                  focus:ring-[#97CE4C]/10
+                "
+              >
+
+                <!-- VALOR INICIAL -->
+
+                <option
+                  value=""
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Tipo: Todos
+                </option>
+
+
+                <option
+                  value="Planet"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Planeta
+                </option>
+
+
+                <option
+                  value="Cluster"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Cluster
+                </option>
+
+
+                <option
+                  value="Space station"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Estación espacial
+                </option>
+
+
+                <option
+                  value="Microverse"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Microverso
+                </option>
+
+
+                <option
+                  value="TV"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  TV
+                </option>
+
+
+                <option
+                  value="Resort"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Resort
+                </option>
+
+
+                <option
+                  value="Fantasy town"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Pueblo fantástico
+                </option>
+
+
+                <option
+                  value="Dream"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Sueño
+                </option>
+
+              </select>
+
+
+              <!-- FLECHA -->
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="
+                  pointer-events-none
+                  absolute
+                  right-3
+                  top-1/2
+                  h-4
+                  w-4
+                  -translate-y-1/2
+                  text-[#97CE4C]
+                "
+              >
+
+                <path d="m6 9 6 6 6-6"></path>
+
+              </svg>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- DIMENSIÓN -->
+            <!-- ================================= -->
+
+            <div
+              class="
+                relative
+                min-w-[200px]
+                flex-1
+              "
+            >
+
+              <select
+                [ngModel]="filters.dimension || ''"
+                (ngModelChange)="filters.dimension = $event; onFilterChange()"
+                style="color: white; color-scheme: dark;"
+                class="
+                  block
+                  h-11
+                  w-full
+                  appearance-none
+                  rounded-xl
+                  border
+                  border-white/10
+                  bg-[#151B2D]
+                  px-3
+                  pr-10
+                  text-sm
+                  font-medium
+                  !text-white
+                  outline-none
+                  transition-all
+                  duration-200
+                  focus:border-[#97CE4C]/60
+                  focus:bg-[#192238]
+                  focus:ring-2
+                  focus:ring-[#97CE4C]/10
+                "
+              >
+
+                <!-- VALOR INICIAL -->
+
+                <option
+                  value=""
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Dimensión: Todas
+                </option>
+
+
+                <option
+                  value="Dimension C-137"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  C-137
+                </option>
+
+
+                <option
+                  value="Replacement Dimension"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Replacement Dimension
+                </option>
+
+
+                <option
+                  value="Cronenberg Dimension"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Cronenberg Dimension
+                </option>
+
+
+                <option
+                  value="Post-Apocalyptic Dimension"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Post-Apocalyptic
+                </option>
+
+
+                <option
+                  value="unknown"
+                  style="
+                    color: white;
+                    background: #151B2D;
+                  "
+                >
+                  Desconocida
+                </option>
+
+              </select>
+
+
+              <!-- FLECHA -->
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="
+                  pointer-events-none
+                  absolute
+                  right-3
+                  top-1/2
+                  h-4
+                  w-4
+                  -translate-y-1/2
+                  text-[#97CE4C]
+                "
+              >
+
+                <path d="m6 9 6 6 6-6"></path>
+
+              </svg>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
         <!-- LOCATIONS -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
         @if (locations.length > 0) {
 
@@ -141,6 +682,8 @@
                   [title]="location.name"
                   [subtitle]="location.type"
                   [description]="location.dimension"
+                    [itemId]="location.id"
+  favoriteType="location"
                 >
                 </app-card>
 
@@ -151,259 +694,280 @@
           </ion-row>
 
 
-<!-- ========================= -->
-<!-- PAGINACIÓN -->
-<!-- ========================= -->
+          <!-- ================================= -->
+          <!-- PAGINACIÓN -->
+          <!-- ================================= -->
 
-<ion-row class="mt-6">
+          <ion-row class="mt-6">
 
-  <ion-col
-    size="12"
-    class="p-0"
-  >
+            <ion-col
+              size="12"
+              class="p-0"
+            >
 
-    <div class="flex w-full justify-center">
+              <div class="flex w-full justify-center">
 
-      <div
-        class="flex max-w-full items-center
-               gap-0.5
-               rounded-2xl
-               border border-white/10
-               bg-[#0B1020]/95
-               p-1.5
-               shadow-[0_8px_25px_rgba(0,0,0,0.25)]"
-      >
+                <div
+                  class="
+                    flex
+                    max-w-full
+                    items-center
+                    gap-0.5
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-[#0B1020]/95
+                    p-1.5
+                    shadow-[0_8px_25px_rgba(0,0,0,0.25)]
+                  "
+                >
 
-        <!-- ========================= -->
-        <!-- PRIMERA PÁGINA -->
-        <!-- ========================= -->
+                  <!-- PRIMERA -->
 
-        <ion-button
-          fill="clear"
-          size="small"
-          [disabled]="!canGoPrevious"
-          (click)="firstPage()"
-          class="m-0 min-w-8"
-        >
+                  <ion-button
+                    fill="clear"
+                    size="small"
+                    [disabled]="!canGoPrevious"
+                    (click)="firstPage()"
+                    class="m-0 min-w-8"
+                  >
 
-          <span
-            class="text-base font-bold text-slate-300"
-          >
-            «
-          </span>
+                    <span
+                      class="
+                        text-base
+                        font-bold
+                        text-slate-300
+                      "
+                    >
+                      «
+                    </span>
 
-        </ion-button>
-
-
-        <!-- ========================= -->
-        <!-- PÁGINA ANTERIOR -->
-        <!-- ========================= -->
-
-        <ion-button
-          fill="clear"
-          size="small"
-          [disabled]="!canGoPrevious"
-          (click)="previousPage()"
-          class="m-0 min-w-8"
-        >
-
-          <span
-            class="text-base font-bold text-slate-300"
-          >
-            ‹
-          </span>
-
-        </ion-button>
+                  </ion-button>
 
 
-        <!-- ================================================= -->
-        <!-- 📱 MÓVIL -->
-        <!-- ================================================= -->
+                  <!-- ANTERIOR -->
 
-        <div
-          class="flex items-center gap-0.5 md:hidden"
-        >
+                  <ion-button
+                    fill="clear"
+                    size="small"
+                    [disabled]="!canGoPrevious"
+                    (click)="previousPage()"
+                    class="m-0 min-w-8"
+                  >
 
-          @for (
-            page of mobilePages;
-            track $index
-          ) {
+                    <span
+                      class="
+                        text-base
+                        font-bold
+                        text-slate-300
+                      "
+                    >
+                      ‹
+                    </span>
 
-            @if (page === '...') {
-
-              <!-- PUNTOS -->
-
-              <span
-                class="flex
-                       h-8
-                       min-w-6
-                       items-center
-                       justify-center
-                       px-1
-                       text-xs
-                       font-bold
-                       text-slate-500"
-              >
-                ...
-              </span>
-
-            } @else {
-
-              <!-- NÚMERO -->
-
-              <button
-                type="button"
-                (click)="goToPage(page)"
-                class="flex
-                       h-8
-                       min-w-8
-                       items-center
-                       justify-center
-                       rounded-lg
-                       px-1
-                       text-xs
-                       font-bold
-                       transition-all
-                       duration-200"
-                [class.bg-[#97CE4C]]="page === currentPage"
-                [class.text-[#0B1020]]="page === currentPage"
-                [class.text-slate-300]="page !== currentPage"
-              >
-
-                {{ page }}
-
-              </button>
-
-            }
-
-          }
-
-        </div>
+                  </ion-button>
 
 
-        <!-- ================================================= -->
-        <!-- 💻 DESKTOP -->
-        <!-- ================================================= -->
+                  <!-- ================================= -->
+                  <!-- MÓVIL -->
+                  <!-- ================================= -->
 
-        <div
-          class="hidden
-                 items-center
-                 gap-0.5
-                 md:flex"
-        >
+                  <div
+                    class="
+                      flex
+                      items-center
+                      gap-0.5
+                      md:hidden
+                    "
+                  >
 
-          @for (
-            page of visiblePages;
-            track $index
-          ) {
+                    @for (
+                      page of mobilePages;
+                      track $index
+                    ) {
 
-            @if (page === '...') {
+                      @if (page === '...') {
 
-              <!-- PUNTOS -->
+                        <span
+                          class="
+                            flex
+                            h-8
+                            min-w-6
+                            items-center
+                            justify-center
+                            px-1
+                            text-xs
+                            font-bold
+                            text-slate-500
+                          "
+                        >
+                          ...
+                        </span>
 
-              <span
-                class="flex
-                       h-8
-                       min-w-7
-                       items-center
-                       justify-center
-                       px-1
-                       text-xs
-                       font-bold
-                       text-slate-500"
-              >
-                ...
-              </span>
+                      }
 
-            } @else {
+                      @else {
 
-              <!-- NÚMERO -->
+                        <button
+                          type="button"
+                          (click)="goToPage(page)"
+                          class="
+                            flex
+                            h-8
+                            min-w-8
+                            items-center
+                            justify-center
+                            rounded-lg
+                            px-1
+                            text-xs
+                            font-bold
+                            transition-all
+                            duration-200
+                          "
+                          [class.bg-[#97CE4C]]="page === currentPage"
+                          [class.text-[#0B1020]]="page === currentPage"
+                          [class.text-slate-300]="page !== currentPage"
+                        >
+                          {{ page }}
+                        </button>
 
-              <button
-                type="button"
-                (click)="goToPage(page)"
-                class="flex
-                       h-8
-                       min-w-8
-                       items-center
-                       justify-center
-                       rounded-lg
-                       px-2
-                       text-xs
-                       font-bold
-                       transition-all
-                       duration-200
-                       hover:bg-white/10"
-                [class.bg-[#97CE4C]]="page === currentPage"
-                [class.text-[#0B1020]]="page === currentPage"
-                [class.text-slate-300]="page !== currentPage"
-              >
+                      }
 
-                {{ page }}
+                    }
 
-              </button>
-
-            }
-
-          }
-
-        </div>
-
-
-        <!-- ========================= -->
-        <!-- PÁGINA SIGUIENTE -->
-        <!-- ========================= -->
-
-        <ion-button
-          fill="clear"
-          size="small"
-          [disabled]="!canGoNext"
-          (click)="nextPage()"
-          class="m-0 min-w-8"
-        >
-
-          <span
-            class="text-base font-bold text-slate-300"
-          >
-            ›
-          </span>
-
-        </ion-button>
+                  </div>
 
 
-        <!-- ========================= -->
-        <!-- ÚLTIMA PÁGINA -->
-        <!-- ========================= -->
+                  <!-- ================================= -->
+                  <!-- DESKTOP -->
+                  <!-- ================================= -->
 
-        <ion-button
-          fill="clear"
-          size="small"
-          [disabled]="!canGoNext"
-          (click)="lastPage()"
-          class="m-0 min-w-8"
-        >
+                  <div
+                    class="
+                      hidden
+                      items-center
+                      gap-0.5
+                      md:flex
+                    "
+                  >
 
-          <span
-            class="text-base font-bold text-slate-300"
-          >
-            »
-          </span>
+                    @for (
+                      page of visiblePages;
+                      track $index
+                    ) {
 
-        </ion-button>
+                      @if (page === '...') {
 
-      </div>
+                        <span
+                          class="
+                            flex
+                            h-8
+                            min-w-7
+                            items-center
+                            justify-center
+                            px-1
+                            text-xs
+                            font-bold
+                            text-slate-500
+                          "
+                        >
+                          ...
+                        </span>
 
-    </div>
+                      }
 
-  </ion-col>
+                      @else {
 
-</ion-row>
+                        <button
+                          type="button"
+                          (click)="goToPage(page)"
+                          class="
+                            flex
+                            h-8
+                            min-w-8
+                            items-center
+                            justify-center
+                            rounded-lg
+                            px-2
+                            text-xs
+                            font-bold
+                            transition-all
+                            duration-200
+                            hover:bg-white/10
+                          "
+                          [class.bg-[#97CE4C]]="page === currentPage"
+                          [class.text-[#0B1020]]="page === currentPage"
+                          [class.text-slate-300]="page !== currentPage"
+                        >
+                          {{ page }}
+                        </button>
+
+                      }
+
+                    }
+
+                  </div>
+
+
+                  <!-- SIGUIENTE -->
+
+                  <ion-button
+                    fill="clear"
+                    size="small"
+                    [disabled]="!canGoNext"
+                    (click)="nextPage()"
+                    class="m-0 min-w-8"
+                  >
+
+                    <span
+                      class="
+                        text-base
+                        font-bold
+                        text-slate-300
+                      "
+                    >
+                      ›
+                    </span>
+
+                  </ion-button>
+
+
+                  <!-- ÚLTIMA -->
+
+                  <ion-button
+                    fill="clear"
+                    size="small"
+                    [disabled]="!canGoNext"
+                    (click)="lastPage()"
+                    class="m-0 min-w-8"
+                  >
+
+                    <span
+                      class="
+                        text-base
+                        font-bold
+                        text-slate-300
+                      "
+                    >
+                      »
+                    </span>
+
+                  </ion-button>
+
+                </div>
+
+              </div>
+
+            </ion-col>
+
+          </ion-row>
+
         }
 
 
-        <!-- ========================= -->
+        <!-- ================================= -->
         <!-- SIN RESULTADOS -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
         @else {
 
@@ -415,34 +979,41 @@
             >
 
               <div
-                class="flex
-                       min-h-[45vh]
-                       items-center
-                       justify-center"
+                class="
+                  flex
+                  min-h-[45vh]
+                  items-center
+                  justify-center
+                "
               >
 
                 <div
-                  class="w-full
-                         max-w-sm
-                         rounded-2xl
-                         border
-                         border-white/10
-                         bg-[#0B1020]/95
-                         p-6
-                         text-center"
+                  class="
+                    w-full
+                    max-w-sm
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-[#0B1020]/95
+                    p-6
+                    text-center
+                    shadow-[0_15px_40px_rgba(0,0,0,0.4)]
+                  "
                 >
 
                   <div
-                    class="mx-auto
-                           flex
-                           h-16
-                           w-16
-                           items-center
-                           justify-center
-                           rounded-full
-                           border
-                           border-[#97CE4C]/30
-                           bg-[#97CE4C]/10"
+                    class="
+                      mx-auto
+                      flex
+                      h-16
+                      w-16
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-[#97CE4C]/30
+                      bg-[#97CE4C]/10
+                    "
                   >
 
                     <span class="text-2xl">
@@ -453,19 +1024,24 @@
 
 
                   <h2
-                    class="mt-4
-                           text-lg
-                           font-bold
-                           text-white"
+                    class="
+                      mt-4
+                      text-lg
+                      font-bold
+                      text-white
+                    "
                   >
                     No encontramos ubicaciones
                   </h2>
 
 
                   <p
-                    class="mt-2
-                           text-sm
-                           text-slate-400"
+                    class="
+                      mt-2
+                      text-sm
+                      leading-5
+                      text-slate-400
+                    "
                   >
                     No hay ubicaciones que
                     coincidan con tu búsqueda.

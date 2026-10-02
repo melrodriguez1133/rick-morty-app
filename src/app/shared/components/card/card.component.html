@@ -1,5 +1,5 @@
 <ion-card
-  class="m-0 overflow-hidden rounded-3xl
+  class="relative m-0 overflow-hidden rounded-3xl
          border border-white/10
          bg-[#0B1020]
          shadow-[0_10px_30px_rgba(0,0,0,0.40)]
@@ -8,6 +8,44 @@
          hover:border-[#97CE4C]/40
          hover:shadow-[0_12px_35px_rgba(151,206,76,0.15)]"
 >
+
+  <!-- ========================= -->
+  <!-- BOTÓN FAVORITO -->
+  <!-- ========================= -->
+
+  @if (itemId !== undefined && favoriteType) {
+
+    <button
+      type="button"
+      (click)="toggleFavorite($event)"
+      class="absolute right-4 top-4 z-20
+             flex items-center justify-center
+             border-0
+             bg-transparent
+             p-0
+             shadow-none
+             outline-none
+             transition-transform duration-200
+             hover:scale-125
+             active:scale-95"
+      [attr.aria-label]="
+        isFavorite
+          ? 'Quitar de favoritos'
+          : 'Agregar a favoritos'
+      "
+    >
+
+      <ion-icon
+        [name]="isFavorite ? 'heart' : 'heart-outline'"
+        class="text-3xl"
+        [class.text-red-500]="isFavorite"
+        [class.text-white]="!isFavorite"
+      ></ion-icon>
+
+    </button>
+
+  }
+
 
   <!-- ========================= -->
   <!-- IMAGEN -->
@@ -26,6 +64,7 @@
       />
 
       <!-- Degradado -->
+
       <div
         class="absolute inset-x-0 bottom-0 h-28
                bg-gradient-to-t
