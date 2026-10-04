@@ -1,10 +1,12 @@
 <ion-header class="ion-no-border">
 
   <ion-toolbar
-    class="[--background:#0B1020] [--color:#FFFFFF] !h-14"
+    class="!h-14 !min-h-14
+           [--background:#0B1020]
+           [--color:#FFFFFF]"
   >
 
-    <!-- BOTÓN MENÚ -->
+    <!-- MENÚ -->
     <ion-buttons slot="start" class="!ml-2">
       <ion-button
         fill="clear"
@@ -14,15 +16,13 @@
         <ion-icon
           slot="icon-only"
           name="menu-outline"
-          class="text-2xl"
+          class="!text-2xl !text-[#97CE4C]"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
 
     <!-- TÍTULO -->
-    <div
-      class="ml-1 flex h-full items-center gap-2"
-    >
+    <div class="ml-1 flex h-full items-center gap-2">
 
       <span
         class="h-3 w-3 shrink-0 rounded-full
@@ -40,7 +40,6 @@
 
   </ion-toolbar>
 
-  <!-- LÍNEA VERDE -->
   <div
     class="h-[2px]
            bg-[#97CE4C]

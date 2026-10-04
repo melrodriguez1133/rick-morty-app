@@ -8,7 +8,8 @@ import {
   IonItem,
   IonIcon,
   IonLabel,
-  MenuController
+  MenuController,
+  
 } from '@ionic/angular';
 
 import { RouterLink } from '@angular/router';
@@ -21,7 +22,8 @@ import {
   playCircleOutline,
   planetOutline,
   heartOutline,
-  personOutline
+  personOutline,
+  settingsOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -52,7 +54,8 @@ export class MenuComponent {
       playCircleOutline,
       planetOutline,
       heartOutline,
-      personOutline
+      personOutline,
+      settingsOutline
     });
 
   }

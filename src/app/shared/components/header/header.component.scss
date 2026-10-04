@@ -1,0 +1,25 @@
+ion-header {
+  --background: #0B1020;
+  background: #0B1020;
+
+  /* Separación del status bar de Android */
+  padding-top: 24px !important;
+}
+
+ion-toolbar {
+  --background: #0B1020;
+  --color: #FFFFFF;
+
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+
+  min-height: 56px !important;
+  height: 56px !important;
+}
+
+ion-buttons,
+ion-button,
+ion-icon {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
