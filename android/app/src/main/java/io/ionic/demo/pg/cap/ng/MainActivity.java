@@ -1,5 +1,4 @@
-package io.ionic.demo.pg.cap.ng;
-
+package com.rickmorty.explorer;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {}

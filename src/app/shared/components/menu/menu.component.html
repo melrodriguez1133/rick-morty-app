@@ -196,6 +196,29 @@
 
       </ion-item>
 
+      <!-- SETTINGS -->
+      <ion-item
+        lines="none"
+        button
+        routerLink="/settings"
+        (click)="closeMenu()"
+        class="mb-1 rounded-xl
+               [--background:transparent]
+               [--color:#FFFFFF]"
+      >
+
+        <ion-icon
+          slot="start"
+          name="person-outline"
+          class="mr-3 text-xl text-[#97CE4C]"
+        ></ion-icon>
+
+        <ion-label>
+          My Profile
+        </ion-label>
+
+      </ion-item>
+
     </div>
 
   </ion-content>

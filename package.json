@@ -31,6 +31,7 @@
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/ios": "^8.5.0",
     "@capacitor/keyboard": "^8.0.5",
+    "@capacitor/local-notifications": "8.3.1",
     "@capacitor/preferences": "^8.0.1",
     "@capacitor/splash-screen": "8.0.2",
     "@capacitor/status-bar": "^8.0.3",
@@ -38,6 +39,7 @@
     "@ionic/pwa-elements": "^3.4.0",
     "ionicons": "^8.1.0",
     "rxjs": "~7.8.0",
+    "sharp": "0.35.5",
     "tailwindcss": "4.3.3",
     "tslib": "^2.3.0"
   },
@@ -46,6 +48,7 @@
     "@angular/cli": "22.1.8",
     "@angular/compiler-cli": "22.1.6",
     "@angular/language-service": "22.1.6",
+    "@capacitor/assets": "3.0.5",
     "@capacitor/cli": "^8.5.0",
     "@eslint/js": "^10.0.0",
     "@ionic/angular-toolkit": "^13.0.0",
@@ -64,5 +67,8 @@
     "postcss": "8.5.28",
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.18.0"
+  },
+  "allowScripts": {
+    "sharp@0.32.6": true
   }
 }

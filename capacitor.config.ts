@@ -1,8 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
-  appId: "io.ionic.demo.pg.cap.ng",
-  appName: "Photo Gallery Cap Ng",
-  npmClient: "npm",
+  appId: 'com.rickmorty.explorer',
+  appName: "Rick & Morty Explorer",
   webDir: "www",
 };
 

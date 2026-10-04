@@ -1,0 +1,443 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar
+    style="
+      --background: #000000;
+      --color: #39ff14;
+      --border-width: 0;
+    "
+  >
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/home"
+        style="--color: #39ff14;">
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-title
+      class="font-bold tracking-[2px]"
+      style="color: #39ff14;">
+      CONFIGURACIÓN
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content
+  class="bg-black"
+  style="--background: #000000;">
+
+  <!-- ====================================== -->
+  <!-- CONTENEDOR PRINCIPAL -->
+  <!-- ====================================== -->
+
+  <div
+    class="min-h-full w-full bg-black px-4 pb-10 pt-12 text-[#39FF14] sm:px-6 sm:pt-16">
+
+    <div class="mx-auto w-full max-w-3xl">
+
+
+      <!-- ====================================== -->
+      <!-- HEADER -->
+      <!-- ====================================== -->
+
+      <div class="mb-10 text-center">
+
+        <!-- ICONO -->
+        <div
+          class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border-2 border-[#39FF14] bg-black shadow-[0_0_20px_rgba(57,255,20,0.65),inset_0_0_20px_rgba(57,255,20,0.12)]">
+
+          <ion-icon
+            name="notifications-outline"
+            class="text-[48px] text-[#39FF14] drop-shadow-[0_0_8px_#39FF14]">
+          </ion-icon>
+
+        </div>
+
+
+        <!-- TITULO -->
+        <h1
+          class="m-0 text-3xl font-black uppercase tracking-[4px] text-[#39FF14] drop-shadow-[0_0_8px_#39FF14] sm:text-4xl">
+
+          NOTIFICACIONES
+
+        </h1>
+
+
+        <!-- DESCRIPCIÓN -->
+        <p
+          class="mx-auto mt-4 max-w-md text-sm leading-6 text-[#39FF14]/80 sm:text-base">
+
+          Configura las notificaciones de
+
+          <span class="font-bold text-[#39FF14]">
+            Rick & Morty Explorer
+          </span>.
+
+        </p>
+
+      </div>
+
+
+      <!-- ====================================== -->
+      <!-- CARD PRINCIPAL -->
+      <!-- ====================================== -->
+
+      <div
+        class="relative overflow-hidden rounded-[24px] border-2 border-[#39FF14] bg-black p-5 shadow-[0_0_20px_rgba(57,255,20,0.4),inset_0_0_30px_rgba(57,255,20,0.06)] sm:p-7">
+
+        <!-- DECORACIÓN -->
+        <div
+          class="absolute left-8 top-0 h-[3px] w-24 bg-[#39FF14] shadow-[0_0_12px_#39FF14]">
+        </div>
+
+        <div
+          class="absolute right-8 top-0 h-[3px] w-14 bg-[#39FF14] shadow-[0_0_12px_#39FF14]">
+        </div>
+
+
+        <!-- ====================================== -->
+        <!-- CARD HEADER -->
+        <!-- ====================================== -->
+
+        <div
+          class="flex items-start justify-between gap-4">
+
+          <div class="min-w-0">
+
+            <h2
+              class="m-0 text-xl font-black uppercase tracking-wide text-[#39FF14] sm:text-2xl">
+
+              Permitir notificaciones
+
+            </h2>
+
+            <p
+              class="mt-2 text-sm text-[#39FF14]/75">
+
+              Recibe avisos de la aplicación.
+
+            </p>
+
+          </div>
+
+
+          <!-- ICONO -->
+          <div
+            class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border-2 border-[#39FF14] bg-black shadow-[0_0_15px_rgba(57,255,20,0.45)]">
+
+            <ion-icon
+              *ngIf="notificationsEnabled"
+              name="checkmark-circle-outline"
+              class="text-[34px] text-[#39FF14]">
+            </ion-icon>
+
+            <ion-icon
+              *ngIf="!notificationsEnabled"
+              name="notifications-off-outline"
+              class="text-[34px] text-[#39FF14]">
+            </ion-icon>
+
+          </div>
+
+        </div>
+
+
+        <!-- ====================================== -->
+        <!-- STATUS -->
+        <!-- ====================================== -->
+
+        <div
+          class="mt-6 flex items-center gap-3 rounded-xl border border-[#39FF14]/70 bg-[#39FF14]/5 px-4 py-4">
+
+          <span
+            class="h-3.5 w-3.5 shrink-0 rounded-full bg-[#39FF14] shadow-[0_0_12px_#39FF14]"
+            [class.opacity-40]="!notificationsEnabled">
+          </span>
+
+          <span
+            class="text-sm font-bold uppercase tracking-wide text-[#39FF14]">
+
+            {{
+              notificationsEnabled
+                ? 'Notificaciones activadas'
+                : 'Notificaciones desactivadas'
+            }}
+
+          </span>
+
+        </div>
+
+
+        <!-- ====================================== -->
+        <!-- ACTIVAR -->
+        <!-- ====================================== -->
+
+        <div
+          *ngIf="!notificationsEnabled"
+          class="mt-6">
+
+          <ion-button
+            expand="block"
+            [disabled]="loading"
+            (click)="enableNotifications()"
+            class="h-14 !font-black uppercase !tracking-wider"
+            style="
+              --background: #39ff14;
+              --background-hover: #32e610;
+              --color: #000000;
+              --border-radius: 12px;
+              --box-shadow: 0 0 18px rgba(57,255,20,0.55);
+            "
+          >
+
+            <ion-icon
+              slot="start"
+              name="notifications-outline"
+              class="text-xl">
+            </ion-icon>
+
+            {{
+              loading
+                ? 'Solicitando permiso...'
+                : 'Activar notificaciones'
+            }}
+
+          </ion-button>
+
+        </div>
+
+
+        <!-- ====================================== -->
+        <!-- PRUEBAS -->
+        <!-- ====================================== -->
+
+        <div
+          *ngIf="notificationsEnabled"
+          class="mt-7 border-t border-[#39FF14]/20 pt-6">
+
+
+          <!-- INFORMACIÓN -->
+          <div
+            class="flex items-start gap-4 rounded-2xl border border-[#39FF14]/70 bg-[#39FF14]/5 p-4 shadow-[0_0_12px_rgba(57,255,20,0.12)]">
+
+            <div
+              class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#39FF14] bg-black shadow-[0_0_10px_rgba(57,255,20,0.35)]">
+
+              <ion-icon
+                name="information-circle-outline"
+                class="text-[25px] text-[#39FF14]">
+              </ion-icon>
+
+            </div>
+
+
+            <div class="min-w-0">
+
+              <strong
+                class="block text-sm font-black uppercase tracking-wide text-[#39FF14]">
+
+                Prueba de notificaciones
+
+              </strong>
+
+              <p
+                class="mt-2 text-xs leading-5 text-[#39FF14]/75 sm:text-sm">
+
+                Al activar el permiso se programan
+                automáticamente 3 notificaciones de prueba.
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- ====================================== -->
+          <!-- BOTÓN PRUEBA -->
+          <!-- ====================================== -->
+
+          <div class="mt-5">
+
+            <ion-button
+              expand="block"
+              [disabled]="loading"
+              (click)="sendTestNotifications()"
+              class="h-14 !font-black uppercase !tracking-wider"
+              style="
+                --background: #39ff14;
+                --background-hover: #32e610;
+                --color: #000000;
+                --border-radius: 12px;
+                --box-shadow: 0 0 18px rgba(57,255,20,0.45);
+              "
+            >
+
+              <ion-icon
+                slot="start"
+                name="notifications-outline">
+              </ion-icon>
+
+              {{
+                loading
+                  ? 'Programando...'
+                  : 'Enviar 3 notificaciones de prueba'
+              }}
+
+            </ion-button>
+
+          </div>
+
+
+          <!-- ====================================== -->
+          <!-- CANCELAR -->
+          <!-- ====================================== -->
+
+          <div class="mt-3">
+
+            <ion-button
+              expand="block"
+              fill="clear"
+              [disabled]="loading"
+              (click)="cancelNotifications()"
+              class="!font-bold uppercase !tracking-wider"
+              style="--color: #39ff14;"
+            >
+
+              <ion-icon
+                slot="start"
+                name="close-outline">
+              </ion-icon>
+
+              Cancelar pruebas
+
+            </ion-button>
+
+          </div>
+
+        </div>
+
+
+        <!-- ====================================== -->
+        <!-- SUCCESS -->
+        <!-- ====================================== -->
+
+        <div
+          *ngIf="testSent"
+          class="mt-6 flex items-start gap-4 rounded-2xl border-2 border-[#39FF14] bg-[#39FF14]/10 p-4 shadow-[0_0_18px_rgba(57,255,20,0.3)]">
+
+          <div
+            class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border-2 border-[#39FF14] bg-black shadow-[0_0_12px_rgba(57,255,20,0.5)]">
+
+            <ion-icon
+              name="checkmark-circle-outline"
+              class="text-[30px] text-[#39FF14]">
+            </ion-icon>
+
+          </div>
+
+
+          <div>
+
+            <strong
+              class="block text-sm font-black uppercase tracking-wide text-[#39FF14]">
+
+              Pruebas programadas
+
+            </strong>
+
+            <p
+              class="mt-2 text-xs leading-5 text-[#39FF14]/75 sm:text-sm">
+
+              Recibirás 3 notificaciones en
+              aproximadamente 5, 10 y 15 segundos.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ====================================== -->
+      <!-- INFORMACIÓN -->
+      <!-- ====================================== -->
+
+      <div
+        class="relative mt-5 overflow-hidden rounded-[22px] border-2 border-[#39FF14]/80 bg-black p-5 shadow-[0_0_15px_rgba(57,255,20,0.25),inset_0_0_20px_rgba(57,255,20,0.04)]">
+
+        <!-- BARRA LATERAL -->
+        <div
+          class="absolute left-0 top-0 h-full w-1 bg-[#39FF14] shadow-[0_0_10px_#39FF14]">
+        </div>
+
+
+        <div
+          class="flex items-start gap-4">
+
+          <div
+            class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-[#39FF14] bg-black shadow-[0_0_12px_rgba(57,255,20,0.35)]">
+
+            <ion-icon
+              name="information-circle-outline"
+              class="text-[30px] text-[#39FF14]">
+            </ion-icon>
+
+          </div>
+
+
+          <div class="min-w-0">
+
+            <strong
+              class="block text-sm font-black uppercase tracking-wide text-[#39FF14]">
+
+              ¿Qué estamos probando?
+
+            </strong>
+
+            <p
+              class="mt-2 text-xs leading-6 text-[#39FF14]/70 sm:text-sm">
+
+              Esta sección solicita el permiso de
+              notificaciones de Android y utiliza
+
+              <span class="font-bold text-[#39FF14]">
+                Capacitor Local Notifications
+              </span>
+
+              para programar tres avisos de prueba.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ====================================== -->
+      <!-- FOOTER -->
+      <!-- ====================================== -->
+
+      <div
+        class="mt-8 pb-5 text-center">
+
+        <p
+          class="m-0 text-[10px] font-bold uppercase tracking-[4px] text-[#39FF14]/30">
+
+          RICK & MORTY EXPLORER
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>
